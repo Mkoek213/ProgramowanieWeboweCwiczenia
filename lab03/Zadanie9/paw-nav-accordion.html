@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!--
+        Aby używać ikon w BS:
+         Jak korzystać z ikon Bootstrap?
+         Krok 1: Dołącz następujący link Bootstrap CDN w sekcji <head> dokumentu HTML.
+         bootstrap-icons => Oficjalna biblioteka ikon SVG typu open source dla Bootstrap
+        link: https://cdnjs.com/libraries/bootstrap-icons
+     -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.1/font/bootstrap-icons.min.css"
+        integrity="sha512-WYaDo1TDjuW+MPatvDarHSfuhFAflHxD87U9RoB4/CSFh24/jzUHfirvuvwGmJq0U7S9ohBXy4Tfmk2UKkp2gA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+        </script>
+
+    <title>PAW Kurs Bootstrapa 5 - Navbar</title>
+</head>
+
+<body>
+     <header>
+
+        <!--
+        Navbar:   link: https://getbootstrap.com/docs/5.2/components/navbar/
+
+        Paski nawigacyjne wymagają opakowania:
+         .navbar z .navbar-expand{-sm|-md|-lg|-xl|-xxl}
+         do responsywnego zwijania i klas schematów kolorów.
+
+
+        klasy:
+        - navbar
+        - navbar-expand-lg => rozwijaj pasek nawigacyjny ponizej lg punktu przejscia => zobaczysz wtedy menu hamburger!
+
+        Uwaga:
+        Ponieważ tło paska nawigacyjnego jest ciemne,
+         musimy poinformować BS, że pasek nawigacyjny jest „ciemny”
+         Wtedy BS może zastosować tekst w jasnym kolorze.
+         Możemy to po prostu zrobić, dodając klasę „navbar-dark” :-)
+
+        Te dwie klasy będą miały wpływ na kolor tekstu:
+         - .navbar-light do użycia z jasnymi kolorami tła => Spowoduje to dodanie czarnego koloru tekstu
+         - .navbar-dark dla ciemnych kolorów tła => Spowoduje to dodanie białego koloru tekstu
+
+         Można dostosować za pomocą narzędzi .bg-*.
+         Te klasy .bg-color służą do zmiany koloru tła paska nawigacyjnego
+         (.bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-wtórny, .bg-dark i .bg-light)
+        ==========================================================
+        Ustawienie navbar jako paska nieruchomego -> fix positioning:
+        Do wyboru masz: 
+        fixed to the top,  ->   .fixed-top
+        fixed to the bottom, -> .fixed-bottom
+        stickied to the top  -> .sticky-top
+
+        Link: https://getbootstrap.com/docs/5.2/components/navbar/#placement
+    -->
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+            <div class="container">
+                <!--
+                Dodanie logo/brandingu jako linku do strony głównej
+                poprzez uzycie klasy „navbar-brand” dla nazwy Twojej firmy, produktu lub projektu.
+                Link: https://getbootstrap.com/docs/5.2/components/navbar/?#nav
+            -->
+                <a class="navbar-brand" href="#">PAW studia podyplomowe</a>
+
+                <!--
+                Dodanie przycisku ikony hamburgera
+                .navbar-toggler => for use with BS collapse plugin and other navigation toggling behaviors.
+             -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!--
+                Wszystkie elementy nav są dołączone do innego elementu div:
+                dwie klasy .collapse i .navbar-collapse
+                 służą do grupowania i ukrywania zawartości paska nawigacyjnego przez nadrzędny punkt przerwania
+                 .collapse => ukrywa zawartość => zwiń nawigację na mniejszych ekranach
+
+            -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Curriculum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Our Instructors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#faq">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonial">Students</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </div> <!-- end div.collapse -->
+            </div> <!-- end div.container-fluid -->
+        </nav>
+    </header>
+
+    <!--
+        Accordion:
+        Link: https://getbootstrap.com/docs/5.2/components/accordion/
+    -->
+    <section id="faq">
+        <div class="container">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+           
+            <div class="accordion" id="accordFAQ">
+                <!-- First accordion div item -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            What I will learn?
+                        </button>
+                        
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#accordFAQ">
+                        
+                        <div class="accordion-body">
+                            <p>You will study the front end and the back end tools.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second accordion div item -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Should I have any experience before joining this program
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordFAQ">
+                        <div class="accordion-body">
+                            <p>No need, as this program is designed to take you from A to Z.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third accordion div item -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Can I take this program in the weekends only?
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordFAQ">
+                        <div class="accordion-body">
+                            <p>Yes, We have a special feature for Saturdays</p>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Can I use PC or MAC computer
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordFAQ">
+                        <div class="accordion-body">
+                            <p>Yes, you can use either one</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end div.accordion -->
+        </div> <!-- end div.container -->
+    </section> <!-- end section#faq-->
+
+
+</body>
+
+</html>
