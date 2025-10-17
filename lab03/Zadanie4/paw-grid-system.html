@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 
+    Bootstrap 5 zaprojektowano tak, aby reagował na urządzenia mobilne.
+    Style dostosowane do urządzeń mobilnych są częścią podstawowej struktury.
+
+     Aby zapewnić prawidłowe renderowanie i powiększanie dotykowe, dodaj następujący tag <meta> wewnątrz elementu <head>
+     - Część szerokość=szerokość urządzenia ustawia szerokość strony tak, aby odpowiadała szerokości ekranu urządzenia (która będzie się różnić w zależności od urządzenia).
+     - Część początkowa-skala=1 ustawia początkowy poziom powiększenia, gdy strona jest ładowana po raz pierwszy przez przeglądarkę.
+   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous" defer></script>
+
+    <title>PAW  Bootstrap Koncepcja Siatki by GR</title>
+    <style>
+        table {
+            border: 3px solid blue;
+            margin: 10px auto;
+        }
+
+        table td {
+            border: 2px solid red;
+            padding: 10px;
+        }
+
+        div.container {
+            background-color: lightyellow;
+        }
+
+        /* nasz własny CSS nie BS */
+        div.row div {
+            background-color: wheat;
+            border: 1px solid brown;
+            text-align: center;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>col1</td>
+            <td>col2</td>
+            <td>col3</td>
+        </tr>
+        <tr>
+            <td>col1</td>
+            <td>col2</td>
+            <td>col3</td>
+        </tr>
+    </table>
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <hr>
+    <hr>
+
+    <!-- 
+    Kontenery są najbardziej podstawowym elementem układu w Bootstrap
+     i są wymagane w przypadku korzystania z domyślnego systemu siatki BS.
+
+     Kontenery służą do przechowywania, wypełniania i (czasami) centrowania zawartości.
+     Chociaż kontenery można zagnieżdżać, większość układów nie wymaga zagnieżdżonego kontenera.
+     Możemy wyśrodkować naszą treść poziomo za pomocą kontenerów
+
+     Bootstrap zawiera trzy różne typy (klasy) kontenerów:
+
+     .container, który ustawia maksymalną szerokość każdego responsywnego punktu przerwania
+     .container-fluid, który ma szerokość: 100% we wszystkich punktach przerwania 
+     .container-{breakpoint}, czyli szerokość: 100% do określonego punktu przerwania
+
+     Link: https://getbootstrap.com/docs/5.2/layout/containers/
+    Link: https://getbootstrap.com/docs/5.2/layout/containers/#default-container
+    -->
+    <div class="container">
+        <!-- 
+            System siatki Bootstrap wykorzystuje szereg kontenerów,
+             wierszy i kolumn do układania i wyrównywania treści.
+             Jest zbudowany z Flexbox i jest w pełni responsywny.
+             Poniżej znajduje się przykład i szczegóły sposóbu łączenia siatki.
+
+             Możemy myśleć o .row jako o wierszu tabeli (tr)
+             Możemy myśleć o .col jako o kolumnie/danych tabeli (td)
+             <tr> => div class="wiersz"
+                     <td></td> => div class="col"
+             </tr>
+
+             Wiersze są opakowaniami kolumn, tak jak <tr> zawija <td>
+            ************************************************** ***********************************
+            
+             W każdym wierszu możemy mieć maksymalnie 12 kolumn (col),
+             więc na przykład, aby mieć obok siebie dwa elementy div o jednakowej wielkości, możemy nadać każdemu z nich szerokość 6 kolumn,
+             lub jeśli chcesz 3 kolumny, możesz nadać każdemu div 4-kolumnową szerokość i tak dalej ...
+        -->
+        <div class="row">
+            <!-- 
+                Poniżej zmuszamy BS do używania 6 kolumn tylko dla obu elementów div w dowolnym rozmiarze ekranu
+                Każdy div zajmie 6 kolumn w DOWOLNYM rozmiarze ekranu (x-small, small, Large, x-large, xx-large)
+            -->
+            <div class="col-6">
+                First Div Element ma zawsze 6 kolumn
+            </div>
+            <div class="col-6">
+                Second Div Element ma zawsze 6 kolumn
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                First Div Element ma zawsze 4 kolumny
+            </div>
+            <div class="col-4">
+                Second Div Element ma zawsze 4 kolumny
+            </div>
+            <div class="col-4">
+                Third Div Element ma zawsze 4 kolumny
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                First Div Element ma zawsze 4 kolumny
+            </div>
+            <div class="col-4">
+                Second Div Element ma zawsze 4 kolumny
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
+                main page content  - ma zawsze 8 kolumn
+            </div>
+            <div class="col-4">
+                sidebar/navigation -  ma zawsze 4 kolumny
+            </div>
+        </div>
+
+        <!-- Ustawianie breakpoints -->
+        <!-- 
+        Klasy siatki
+         System siatki Bootstrap 5 ma pięć klas:
+         .col- (bardzo małe urządzenia - szerokość ekranu mniejsza niż 576px) <= użyliśmy go powyżej :-)
+         .col-sm- (małe urządzenia - szerokość ekranu równa lub większa niż 576px)
+         .col-md- (urządzenia średnie - szerokość ekranu równa lub większa niż 768px)
+         .col-lg- (duże urządzenia - szerokość ekranu równa lub większa niż 992px)
+         .col-xl- (urządzenia x-large - szerokość ekranu równa lub większa niż 1200px)
+         Powyższe klasy można łączyć, tworząc bardziej dynamiczne i elastyczne układy.
+        
+         Wskazówka:
+         Każda klasa skaluje się w górę, więc jeśli chcesz ustawić tę samą szerokość dla sm i md, wystarczy określić sm.
+
+        Link: https://getbootstrap.com/docs/5.2/layout/breakpoints/#available-breakpoints
+
+        Poniżej użyliśmy col-md-4,
+         w oparciu o punkty przerwania będą układać się obok siebie
+         jeśli okno przeglądarki jest większe niż 768px
+         jeśli zmniejszymy szerokość przeglądarki do mniej niż 768 pikseli, będą one ułożone pionowo
+         ************************************************** ***********************************
+
+         W przypadku urządzeń z małym ekranem możemy użyć col-sm
+         Przykład:
+         jeśli chcemy, aby treść 1 i treść 2 były wyświetlane w jednej linii (poziomo)
+         i content3, które mają być wyświetlane pod nimi, możemy dodać klasy:
+         - col-sm-6 dla pierwszego i drugiego elementu div
+         - zauważ, że nie musimy dodawać col-sm-12 dla trzeciego elementu div, ponieważ jest to ustawienie domyślne
+         Zauważ, że col-sm działa z minimalną rozdzielczością 576 pikseli
+        -->
+
+        <hr>
+        <div class="row">
+            <!-- 
+                dodajemy 3 div elements 
+            -->
+            <div class="col-sm-6 col-md-4">
+                Label 1  - 6 kolumn sm lub 4 kolumny md
+            </div>
+            <div class="col-sm-6 col-md-4">
+                Label 2 - 6 kolumn sm lub 4 kolumny md
+            </div>
+            <!-- 
+                Nie określiliśmy numerów kolumn na małych ekranach
+                 BS da mu 12 kolumn (domyślnie) na małych ekranach
+                 nie ma potrzeby dodawania .col-sm-12
+            -->
+            <div class="col-sm-6 col-md-4">
+                Label 3 - 6 kolumn sm lub 4 kolumny md
+            </div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <!-- 
+                col-12 ??? <=  ponieważ nie określiliśmy rozmiaru ekranu (s,md,lg,xl,xxl)
+                 ten div zajmie zawsze 12 kolumn  ekranu 
+                 nie musimy wiec uzywac col-sm-12, col-md-12, col-lg-12 itp.
+             -->
+            <div class="col-12">Zawsze 12-cols Content1</div>
+            <div class="col-12">Zawsze 12-cols Content2</div>
+            <div class="col-12">Zawsze 12-cols Content3</div>
+            <div class="col-12">Zawsze 12-cols Content4</div>
+        </div> <!-- end div.row -->
+
+        <hr>
+        <div class="row">
+            <div class="col-sm-4 col-md-2">test 1  - 4 kolumn sm lub 2 kolumny md </div>
+            <div class="col-sm-8 col-md-8"> PAW  - 8 kolumn sm lub 8 kolumny md </div>
+            <div class="col-sm-12 col-md-2">test 2 - zawsze 12 columns</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <!-- 
+                wszystkie klasy kolumn znajdują się wewnątrz .row
+                 dla bardzo małych (X-Small) domyślnie BS sprawi, że div zajmie 12 kolumn
+                 col-sm-(x) od 1 do 12 => dla małych ekranów => to będzie działać na małych ekranach
+                 col-md-(x) od 1 do 12 => dla medium
+                 col-lg-(x)
+
+                 Uwaga:
+                 col-md-8 => zajmie 8 kolumn na średnich ekranach i poza nimi (dla dużych i x-dużych)
+
+                 Poniżej nie musimy wpisywac wiec: col-md-8 col-lg-8 !!!
+            -->
+            <div class="col-sm-6 col-md-8">Item1  - 6 kolumn sm i 8 dla md</div>
+            <div class="col-sm-6 col-md-4">Item2  - 6 kolumn sm i 4 dla md</div>
+            <div class="col-sm-6 col-md-4 col-lg-4">Item3  - 6 kolumn sm i 4 dla md</div>
+            <div class="col-sm-6 col-md-8 col-lg-8">Item4 - 6 kolumn sm i 8 dla md</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <!-- 
+                możemy używać (col-xxl) w przypadku dużych ekranów (telewizja lub bilbordy na ulicach)
+                 może nie nadawać się do monitorów laptopów
+             -->
+            <div class="col-sm-6 col-md-8 col-lg-6 col-xl-4 col-xxl-3">Item1  - sm6 md8 lg6 xl4 xxl3</div>
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-3">Item2  - sm6 md4 lg4 xl4 xxl3</div>
+            <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-3">Item3  - sm6 md4 lg2 xl2 xxl3</div>
+            <div class="col-sm-6 col-md-8 col-lg-12 col-xl-2 col-xxl-3">Item4 - sm6 md8 lg12 xl2 xxl3</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-4">Materials#1  - sm 4</div>
+            <div class="col-sm-4">Materials#2  - sm 4 </div>
+            <div class="col-sm-4">Materials#3  - sm 4</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <!-- 
+        Co się stanie, jeśli suma kolumn będzie mniejsza/większa niż 12?
+
+         Jeśli w jednym wierszu zostanie umieszczonych więcej niż 12 kolumn,
+         każda grupa dodatkowych kolumn zostanie, jako jedna jednostka, zawinięta w nową linię.
+
+         Jeśli jest ich mniej niż 12, na końcu wiersza będzie pusta kolumna lub spacja.
+        
+         W takiej sytuacji możemy przesunąć zawartość (kolumny) w prawo lub wyśrodkować je
+         za pomocą klasy offset.
+
+         Klasy offsetowe:
+         Przesuń kolumny w prawo, używając klas .offset-md-*. Klasy te zwiększają lewy margines kolumny o * kolumn.
+         Na przykład .offset-md-4 przenosi .col-md-4 o cztery kolumny.
+
+         UWAGA:
+         Nie zapominaj, że klasa offset-sm-1 zostanie zastosowana do:
+         urządzenia z małym ekranem i większe/wyższe,
+         więc musimy wyłączyć (zresetować) przesunięcie do 0 dla urządzeń ze średnim ekranem i wyższych/wyższych, dodając „offset-sm-0”
+​
+       -->
+            <div class="offset-sm-1 col-sm-5">More Materials#1</div>
+            <div class="col-sm-5">More Materials#2</div>
+            <!-- <div class="col-sm-3">More Materials#3</div> -->
+            <!-- <div class="col-sm-3">More Materials#4</div> -->
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <div class="col-sm-5">More Final Materials#1</div>
+            <!-- dodane pustej kolumny pomiedzy div -->
+            <div class="offset-sm-2 col-sm-5">More Final Materials#2</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <!-- 
+            aby utworzyć „Trzy równe kolumny” dla dowolnego rozmiaru ekranu!
+             możemy to zrobić za pomocą klasy .col
+             Poniższy przykład pokazuje, jak utworzyć trzy kolumny o równej szerokości,
+             na WSZYSTKICH urządzeniach i szerokościach ekranów:
+            -->
+            <div class="col">Left Content1</div>
+            <div class="col">Middle Content2</div>
+            <div class="col">Right Content3</div>
+        </div> <!-- end div.row -->
+        <hr>
+
+        <div class="row">
+            <div class="main-content col-md-8">
+                <p>zawartosc sekcji main</p>
+            </div>
+            <div class="sidebar col-md-4">
+                <p>zawartosc sidebar</p>
+            </div>
+        </div> <!-- end div.row -->
+    </div> <!-- end div.container -->
+   
+</body>
+
+</html>
