@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 8</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            display: block;
+        }
+
+        .divider-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .divider {
+            flex: 1;
+            border-right: 2px solid white;
+        }
+
+        .divider:last-child {
+            border-right: none;
+        }
+
+        .text-overlay {
+            position: absolute;
+            bottom: 120px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .gallery-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-subtitle {
+            background-color: rgba(74, 144, 226, 0.8);
+            color: white;
+            padding: 20px 0;
+            font-size: 24px;
+            width: 100%;
+            display: block;
+        }
+
+        .navigation-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            z-index: 20;
+        }
+
+        .nav-column {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+
+        .nav-item {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4a90e2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #4a90e2;
+        }
+
+        .nav-item:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-item.active {
+            background-color: white;
+            color: #4a90e2;
+            border-color: #4a90e2;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-title {
+                font-size: 32px;
+            }
+
+            .gallery-subtitle {
+                font-size: 18px;
+                padding: 15px 30px;
+            }
+
+            .nav-item {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+
+            .text-overlay {
+                bottom: 100px;
+            }
+
+            .nav-column {
+                padding-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slider-container">
+            <div class="slide active">
+                <img src="1.jpg" alt="Image 1">
+            </div>
+            <div class="slide">
+                <img src="2.jpg" alt="Image 2">
+            </div>
+            <div class="slide">
+                <img src="3.jpg" alt="Image 3">
+            </div>
+            <div class="slide">
+                <img src="4.jpg" alt="Image 4">
+            </div>
+
+            <div class="divider-overlay">
+                <div class="divider"></div>
+                <div class="divider"></div>
+                <div class="divider"></div>
+                <div class="divider"></div>
+            </div>
+
+            <div class="text-overlay">
+                <div class="gallery-title" id="galleryTitle">PAW 1</div>
+                <div class="gallery-subtitle" id="gallerySubtitle">What you've been dreaming of</div>
+            </div>
+
+            <div class="navigation-container">
+                <div class="nav-column">
+                    <div class="nav-item active" onclick="showSlide(0)">1</div>
+                </div>
+                <div class="nav-column">
+                    <div class="nav-item" onclick="showSlide(1)">2</div>
+                </div>
+                <div class="nav-column">
+                    <div class="nav-item" onclick="showSlide(2)">3</div>
+                </div>
+                <div class="nav-column">
+                    <div class="nav-item" onclick="showSlide(3)">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const navItems = document.querySelectorAll('.nav-item');
+        const galleryTitle = document.getElementById('galleryTitle');
+        const gallerySubtitle = document.getElementById('gallerySubtitle');
+
+        const subtitles = [
+            "What you've been dreaming of",
+            "Where the fun begins",
+            "Unforgettable experiences",
+            "When silence touches nature"
+        ];
+
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            currentSlide = index;
+            
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            
+            navItems.forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            galleryTitle.textContent = `PAW ${index + 1}`;
+            gallerySubtitle.textContent = subtitles[index];
+        }
+    </script>
+</body>
+</html>
+

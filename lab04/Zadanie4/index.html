@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zadanie 4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .cards-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-wrapper {
+            position: relative;
+            padding-top: 32px;
+            padding-bottom: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: -40px -30px 0 -30px;
+            margin-bottom: -10px;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto;
+            border: 5px solid white;
+            display: block;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            margin-top: 10px;
+        }
+
+        .profile-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .social-icon.facebook {
+            background-color: #1877f2;
+        }
+
+        .social-icon.twitter {
+            background-color: #1da1f2;
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-icon.youtube {
+            background-color: #ff0000;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-subscribe {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-subscribe:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-message {
+            background-color: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-message:hover {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+
+            .profile-card .profile-image {
+                content: url('https://i.pravatar.cc/240?img=2');
+            }
+
+            .profile-card:nth-child(2) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=3');
+            }
+
+            .profile-card:nth-child(3) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=4');
+            }
+
+            .profile-card:nth-child(4) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=5');
+            }
+
+            .profile-card:nth-child(5) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=6');
+            }
+
+            .profile-card:nth-child(6) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=7');
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .profile-card {
+                padding: 30px 20px;
+            }
+
+            .image-wrapper {
+                margin: -30px -20px 0 -20px;
+                padding-top: 24px;
+                padding-bottom: 13px;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-card .profile-image {
+                content: url('https://i.pravatar.cc/200?img=10');
+            }
+
+            .profile-card:nth-child(2) .profile-image {
+                content: url('https://i.pravatar.cc/200?img=11');
+            }
+
+            .profile-card:nth-child(3) .profile-image {
+                content: url('https://i.pravatar.cc/200?img=12');
+            }
+
+            .profile-card:nth-child(4) .profile-image {
+                content: url('https://i.pravatar.cc/200?img=13');
+            }
+
+            .profile-card:nth-child(5) .profile-image {
+                content: url('https://i.pravatar.cc/200?img=14');
+            }
+
+            .profile-card:nth-child(6) .profile-image {
+                content: url('https://i.pravatar.cc/200?img=15');
+            }
+
+            .profile-name {
+                font-size: 20px;
+            }
+
+            .profile-title {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .profile-card .profile-image {
+                content: url('https://i.pravatar.cc/240?img=20');
+            }
+
+            .profile-card:nth-child(2) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=21');
+            }
+
+            .profile-card:nth-child(3) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=22');
+            }
+
+            .profile-card:nth-child(4) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=23');
+            }
+
+            .profile-card:nth-child(5) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=24');
+            }
+
+            .profile-card:nth-child(6) .profile-image {
+                content: url('https://i.pravatar.cc/240?img=25');
+            }
+
+            .social-icons {
+                gap: 10px;
+            }
+
+            .social-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cards-gallery">
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">2.5K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1.2K</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">856</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">3.1K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">982</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">654</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">1.8K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">756</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">432</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">4.2K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1.5K</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">923</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">2.9K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1.1K</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">678</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="image-wrapper">
+                    <img src="profile.jpg" alt="Profile" class="profile-image">
+                </div>
+                <div class="profile-name">PAW Student</div>
+                <div class="profile-title">YouTuber & Blogger</div>
+                
+                <div class="social-icons">
+                    <div class="social-icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon twitter">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-subscribe">Subscribe</button>
+                    <button class="btn btn-message">Message</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">3.7K</span>
+                        <span class="stat-label">Likes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1.3K</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">789</span>
+                        <span class="stat-label">Shares</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

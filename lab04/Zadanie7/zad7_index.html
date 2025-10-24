@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Lekcji - Zadanie 7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #2ecc71 0%, #ffffff 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+            font-size: 28px;
+            text-transform: uppercase;
+            padding: 0;
+        }
+
+        .class-info {
+            text-align: center;
+            color: white;
+            margin-bottom: 0;
+            font-size: 18px;
+            background-color: #27ae60;
+            padding: 10px;
+            font-weight: bold;
+            border: 2px solid #2c3e50;
+            border-bottom: none;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0;
+            background-color: white;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            border: 2px solid #2c3e50;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .schedule-table th {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .schedule-table th {
+            background-color: #fffacd;
+        }
+
+        .schedule-table td {
+            height: 50px;
+        }
+
+        .schedule-table th:not(.blank-cell) {
+            width: 16%;
+        }
+
+        .schedule-table td.lesson-cell {
+            width: 16%;
+        }
+
+        td.vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 20px 10px;
+            letter-spacing: 5px;
+            background-color: #a8e6b7;
+        }
+
+        .time-cell {
+            text-align: center;
+        }
+
+        .lesson-number {
+            display: block;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .time-range {
+            display: block;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .blank-cell {
+            background-color: #a8e6b7;
+        }
+
+        .vertical-text {
+            background-color: #a8e6b7;
+        }
+
+        .lesson-cell {
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .schedule-table {
+                font-size: 12px;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                padding: 8px 4px;
+            }
+
+            .subject {
+                font-size: 11px;
+            }
+
+            .teacher,
+            .room {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .schedule-table {
+                font-size: 10px;
+            }
+
+            .schedule-table th,
+            .schedule-table td {
+                padding: 6px 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plan Lekcji</h1>
+        <div class="class-info">klasa 3 X - nazwisko i imię</div>
+        
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th colspan="2" style="background-color: #a8e6b7;"></th>
+                    <th>Poniedziałek</th>
+                    <th>Wtorek</th>
+                    <th>Środa</th>
+                    <th>Czwartek</th>
+                    <th>Piątek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="11" class="vertical-text">LEKCJE</td>
+                    <td class="time-cell">
+                        <span class="lesson-number">0</span>
+                        <span class="time-range">7<sup>10</sup> - 7<sup>55</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">1</span>
+                        <span class="time-range">8<sup>00</sup> - 8<sup>45</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">2</span>
+                        <span class="time-range">8<sup>55</sup> - 9<sup>40</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">3</span>
+                        <span class="time-range">9<sup>50</sup> - 10<sup>35</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">4</span>
+                        <span class="time-range">10<sup>45</sup> - 11<sup>30</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">5</span>
+                        <span class="time-range">11<sup>40</sup> - 12<sup>25</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">6</span>
+                        <span class="time-range">12<sup>45</sup> - 13<sup>30</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">7</span>
+                        <span class="time-range">13<sup>50</sup> - 14<sup>35</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">8</span>
+                        <span class="time-range">14<sup>40</sup> - 15<sup>25</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">9</span>
+                        <span class="time-range">15<sup>30</sup> - 16<sup>15</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+                <tr>
+                    <td class="time-cell">
+                        <span class="lesson-number">10</span>
+                        <span class="time-range">16<sup>20</sup> - 17<sup>05</sup></span>
+                    </td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                    <td class="lesson-cell"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
