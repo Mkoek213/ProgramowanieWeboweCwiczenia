@@ -24,16 +24,71 @@ let people = [
 
 let duplicateName = ['John', 'Paul', 'George', 'Ringo', 'Paul', 'Paul', 'Ringo'];
 
+// Funkcja pomocnicza do wypisywania wyników na stronie
+const renderSection = (title, items) => {
+  const app = document.querySelector('#app');
 
-// 1. Na stronach internetowych wyświetlają się nazwy zawierające znak "r".  ( tablica names)
+  if (!app) {
+    return;
+  }
 
-// 2. sprawdź czy tablica zawiera tylko elementy mniejsze niż 9. wynik wyswietl na stronei w sekcji 2
-      sprawdź, czy tablica zawiera jakieś elementy mniejsze niż 6 wyników. wynik wyświetl w przeglądarce w sekcji 2
-      inkrementuj wszystkie elementy w tablicy numbers. Nastepnie stwórz nowa tablice zawierajaca tylko elementy nieparzyste. 
-      Nesteopnie Oblicz sumę wszystkich elementów z tablicy. Wynik wyswietl w sekcji 2
+  const section = document.createElement('li');
+  const heading = document.createElement('h2');
+  heading.textContent = title;
+  section.append(heading);
 
-// 3. Na stronach internetowych wyświetlają się kraje z Europy
+  const list = document.createElement('ul');
+  list.classList.add('section-list');
 
-// 4. Znajdź nazwiska wszystkich osób, które mają e-maile „replicant.io”. wyświetlanie wyników na stronach internetowych.
+  items.forEach((item) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    list.append(listItem);
+  });
 
-// 5. usuwanie zduplikowanych wartości z tablicy nazwaduplikatu
+  section.append(list);
+  app.append(section);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Na stronach internetowych wyświetlają się nazwy zawierające znak "r". (tablica names)
+  const namesWithR = names.filter((name) => name.toLowerCase().includes('r'));
+  renderSection('1. Imiona zawierające literę "r"', namesWithR);
+
+  // 2. Operacje na tablicy numbers
+  //    sprawdź czy tablica zawiera tylko elementy mniejsze niż 9
+  //    sprawdź, czy tablica zawiera jakieś elementy mniejsze niż 6
+  //    inkrementuj wszystkie elementy w tablicy numbers i utwórz tablicę tylko z nieparzystymi wartościami
+  //    oblicz sumę wszystkich elementów
+  const allLessThanNine = numbers.every((number) => number < 9);
+  const anyLessThanSix = numbers.some((number) => number < 6);
+  const incrementedNumbers = numbers.map((number) => number + 1);
+  const oddNumbers = incrementedNumbers.filter((number) => number % 2 !== 0);
+  const sumOfNumbers = incrementedNumbers.reduce((total, number) => total + number, 0);
+
+  renderSection('2. Operacje na liczbach', [
+    `Wszystkie elementy mniejsze niż 9: ${allLessThanNine ? 'tak' : 'nie'}`,
+    `Czy jest element mniejszy niż 6: ${anyLessThanSix ? 'tak' : 'nie'}`,
+    `Tablica po inkrementacji: ${incrementedNumbers.join(', ')}`,
+    `Tylko liczby nieparzyste: ${oddNumbers.join(', ')}`,
+    `Suma elementów: ${sumOfNumbers}`
+  ]);
+
+  // 3. Na stronie wyświetlają się kraje z Europy
+  const europeanCountries = countries
+    .filter((country) => country.continent === 'Europe')
+    .map((country) => country.name);
+
+  renderSection('3. Kraje z Europy', europeanCountries);
+
+  // 4. Znajdź nazwiska wszystkich osób, które mają e-maile „replicant.io”
+  const replicantNames = people
+    .filter((person) => person.email.endsWith('replicant.io'))
+    .map((person) => person.name);
+
+  renderSection('4. Osoby z domeną replicant.io', replicantNames);
+
+  // 5. Usuwanie zduplikowanych wartości z tablicy duplicateName
+  const uniqueNames = [...new Set(duplicateName)];
+  renderSection('5. Unikalne imiona', uniqueNames);
+});

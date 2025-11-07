@@ -1,11 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const button = document.querySelector('#button');
   const image = document.querySelector('img');
-
-  if (!button || !image) {
-    return;
-  }
-
   const slides = [
     { src: '1.jpg', className: 'image1'},
     { src: '2.jpg', className: 'image2'},
