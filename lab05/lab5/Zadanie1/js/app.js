@@ -8,10 +8,7 @@ if (askNameButton && nameOutput) {
     if (userName === null) {
       return;
     }
-
-    const trimmedName = userName.trim();
-
-    nameOutput.textContent = trimmedName || 'Anonim';
+    nameOutput.textContent = userName;
   });
 }
 
