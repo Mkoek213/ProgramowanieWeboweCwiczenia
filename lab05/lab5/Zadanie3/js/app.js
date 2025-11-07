@@ -16,11 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   button.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % slides.length;
-    const { src, className, alt } = slides[currentIndex];
-
-    image.src = src;
-    image.alt = alt;
-    image.className = className;
+    image.setAttribute('src', slides[currentIndex].src);
+    image.setAttribute('class', slides[currentIndex].className);
   });
 });
 
