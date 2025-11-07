@@ -2,16 +2,25 @@
 <html lang="pl">
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>Zadanie 5</title>
         <link rel="stylesheet" href="css/style.css">
         <script src="js/app.js" defer></script>
     </head>
     <body>
-        <button id="myButton">Test!</button>
-  
-        <button id="myButton1" >add Event to Test</button>
-        <button id="myButton2" >delete Event from Test!</button>
-  
-        <p id="wynik">place to display counter</p>
+        <main class="card">
+            <p>Naciśnij Dodaj, aby aktywować przycisk testowy i zwiększać licznik.</p>
+
+            <div class="controls">
+                <button id="Button1">Test!</button>
+                <button id="Button2">Dodaj</button>
+                <button id="Button3">Usuń</button>
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" id="enable-second-function">
+            </label>
+
+            <p id="counter" class="counter">Licznik: 0</p>
+        </main>
     </body>
 </html>
