@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-layer {
+    position: fixed;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px);
+    transition: filter 0.5s ease;
+    z-index: -1;
+}
+
+.background-layer.blur-none {
+    filter: blur(0px);
+}
+
+.background-layer.blur-medium {
+    filter: blur(8px);
+}
+
+.background-layer.blur-high {
+    filter: blur(20px);
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.password-form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
+}
+
+.input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#passwordInput {
+    width: 100%;
+    padding: 15px 50px 15px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    outline: none;
+}
+
+#passwordInput:focus {
+    border-color: #4CAF50;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-btn img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.toggle-btn:hover img {
+    opacity: 1;
+}
+
+.strength-meter {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: all 0.4s ease;
+    border-radius: 10px;
+}
+
+.strength-bar.weak {
+    width: 33%;
+    background: linear-gradient(90deg, #ff4444, #ff6b6b);
+}
+
+.strength-bar.medium {
+    width: 66%;
+    background: linear-gradient(90deg, #ffa500, #ffb84d);
+}
+
+.strength-bar.strong {
+    width: 100%;
+    background: linear-gradient(90deg, #4CAF50, #66bb6a);
+}
+
+.strength-text {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 25px;
+    min-height: 24px;
+    font-size: 18px;
+}
+
+.strength-text.weak {
+    color: #ff4444;
+}
+
+.strength-text.medium {
+    color: #ffa500;
+}
+
+.strength-text.strong {
+    color: #4CAF50;
+}
+
+.requirements {
+    margin-top: 25px;
+}
+
+.requirements h3 {
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 18px;
+}
+
+.requirements ul {
+    list-style: none;
+}
+
+.requirements li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.requirements li.met {
+    color: #4CAF50;
+}
+
+.requirement-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.requirements li.met .requirement-icon {
+    transform: scale(1.1);
+}
+
+.requirements li span {
+    color: #666;
+    font-size: 15px;
+}
+
+.requirements li.met span {
+    color: #4CAF50;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .password-form {
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .requirements li span {
+        font-size: 14px;
+    }
+}

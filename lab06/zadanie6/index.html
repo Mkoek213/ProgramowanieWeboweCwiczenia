@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocena siły hasła</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-layer" id="bgLayer"></div>
+    
+    <div class="container">
+        <div class="password-form">
+            <h1>Sprawdź siłę hasła</h1>
+            
+            <div class="input-wrapper">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Wprowadź hasło..."
+                    autocomplete="off"
+                >
+                <button type="button" id="toggleVisibility" class="toggle-btn" aria-label="Pokaż/ukryj hasło">
+                    <img src="img/eye_closed.png" alt="Pokaż hasło" id="eyeIcon">
+                </button>
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <p class="strength-text" id="strengthText">Wprowadź hasło</p>
+
+            <div class="requirements">
+                <h3>Wymagania hasła:</h3>
+                <ul id="requirementsList">
+                    <li data-requirement="length">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Co najmniej 8 znaków</span>
+                    </li>
+                    <li data-requirement="uppercase">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Co najmniej 1 wielka litera</span>
+                    </li>
+                    <li data-requirement="digit">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Co najmniej 1 cyfra</span>
+                    </li>
+                    <li data-requirement="special">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Co najmniej 1 znak specjalny </span>
+                    </li>
+                    <li data-requirement="noRepeat">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Brak 3 powtarzających się znaków </span>
+                    </li>
+                    <li data-requirement="noSequence">
+                        <img src="img/wrong.png" alt="Nie spełnione" class="requirement-icon">
+                        <span>Brak sekwencji </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
