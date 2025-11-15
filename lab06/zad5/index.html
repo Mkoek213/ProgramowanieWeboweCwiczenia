@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weryfikacja zgodności tekstów</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="wrapper">
+        <section class="comparator-widget">
+            <header class="widget-header">
+                <p>Weryfikacja zgodności tekstów</p>
+            </header>
+            
+            <form id="analysis-form">
+                <div class="form-field">
+                    <label for="source-text">Wprowadz pierwszy tekst</label>
+                    <textarea id="source-text" rows="5" placeholder="Wklej tekst bazowy..."></textarea>
+                </div>
+                
+                <div class="form-field">
+                    <label for="comparison-text">Wprowadz drugi tekst</label>
+                    <textarea id="comparison-text" rows="5" placeholder="Wklej tekst do analizy..."></textarea>
+                </div>
+                
+                <button type="submit" id="analyze-button">oblicz podobienstwo</button>
+            </form>
+            
+            <div class="result-wrapper">
+                <output id="output-display"></output>
+            </div>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

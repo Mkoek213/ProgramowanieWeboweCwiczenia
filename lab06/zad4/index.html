@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo by GR - Unsplash API Tester</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">📷 Demo by GR - Unsplash API Tester</div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search..." />
+            <button id="searchBtn">🔍</button>
+        </div>
+    </header>
+
+    <main>
+        <button class="nav-btn left" id="prevBtn">&lt;</button>
+        <div class="gallery-container">
+            <div class="gallery" id="gallery"></div>
+        </div>
+        <button class="nav-btn right" id="nextBtn">&gt;</button>
+    </main>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-btn" id="closeBtn">✕</button>
+            <img id="lightboxImg" src="" alt="">
+            <div class="lightbox-info">
+                <p id="imageInfo"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarcza Strzelnicza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout-container">
+        
+        <header class="main-header">
+            <div class="score-board">
+                <span id="score-display">0</span>
+            </div>
+        </header>
+
+        <main class="target-zone">
+            <div class="target target-blue" data-name="niebieski" data-points="1">
+                <div class="target target-red" data-name="czerwony" data-points="2">
+                    <div class="target target-yellow" data-name="żółty" data-points="5"></div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="controls-panel">
+            <button id="btn-propagation">Propagacja aktywna</button>
+            
+            <fieldset class="order-controls">
+                <legend>Wywolanie</legend>
+                <button id="btn-order-125">1 → 2 → 5 </button>
+                <button id="btn-order-152">1 → 5 → 2 </button>
+                <button id="btn-order-251">2 → 5 → 1 </button>
+                <button id="btn-order-521" class="active">5 → 2 → 1 </button>
+            </fieldset>
+            <button id="btn-reset">Reset</button>
+            <button id="btn-clear-log">Wyczyść Log</button>
+        </aside>
+
+        <footer class="log-area">
+            <h2>Logi</h2>
+            <div id="log-container"></div>
+        </footer>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

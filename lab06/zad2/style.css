@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.layout-container {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header header"
+        "target controls"
+        "logs logs";
+    gap: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.main-header {
+    grid-area: header;
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score-board {
+    font-size: 1.1rem;
+}
+
+#score-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f1c40f;
+    min-width: 50px;
+    display: inline-block;
+    text-align: right;
+}
+
+.target-zone {
+    grid-area: target;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    min-height: 350px;
+}
+
+.target {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: crosshair;
+    transition: transform 0.1s ease, opacity 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) inset;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.target:active {
+    transform: scale(0.97);
+}
+
+.target-blue {
+    width: 300px;
+    height: 300px;
+    background-color: #3498db;
+}
+
+.target-red {
+    width: 200px;
+    height: 200px;
+    background-color: #e74c3c;
+}
+
+.target-yellow {
+    width: 100px;
+    height: 100px;
+    background-color: #f1c40f;
+}
+
+.target.is-inactive {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.controls-panel {
+    grid-area: controls;
+    background: #ecf0f1;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls-panel h2 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+    border-bottom: 2px solid #bdc3c7;
+    padding-bottom: 10px;
+}
+
+.controls-panel button {
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.controls-panel button:hover {
+    background-color: #2980b9;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.4);
+}
+
+.controls-panel button:active {
+    transform: scale(0.98);
+}
+
+#btn-reset {
+    background-color: #e74c3c;
+}
+#btn-reset:hover {
+    background-color: #c0392b;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+}
+
+#btn-clear-log {
+    background-color: #95a5a6;
+}
+#btn-clear-log:hover {
+    background-color: #7f8c8d;
+    box-shadow: none;
+}
+
+.order-controls {
+    border: 2px solid #bdc3c7;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.order-controls legend {
+    padding: 0 5px;
+    margin-left: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.order-controls button {
+    background-color: #95a5a6; 
+    font-size: 0.9rem;
+    padding: 10px;
+}
+
+.order-controls button:hover {
+    background-color: #7f8c8d;
+    box-shadow: none;
+}
+
+.order-controls button.active {
+    background-color: #2980b9;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.4);
+}
+
+.log-area {
+    grid-area: logs;
+    padding: 25px 30px;
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+}
+
+.log-area h2 {
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+#log-container {
+    height: 200px;
+    overflow-y: auto;
+    background: #ecf0f1;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.log-message {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+    color: #2c3e50;
+}
+
+.log-message:first-child {
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .layout-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "target"
+            "controls"
+            "logs";
+    }
+
+    .main-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+}

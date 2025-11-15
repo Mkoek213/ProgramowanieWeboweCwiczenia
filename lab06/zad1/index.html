@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreator Zgłoszenia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <div class="form-card">
+            <nav class="step-indicator">
+                <div class="step active" data-step="1">1</div>
+                <div class="step-separator"></div>
+                <div class="step" data-step="2">2</div>
+                <div class="step-separator"></div>
+                <div class="step" data-step="3">3</div>
+                <div class="step-separator"></div>
+                <div class="step" data-step="4">4</div>
+            </nav>
+
+            <form id="multiStepForm" novalidate>
+                <section class="form-step active" data-step="1">
+                    <div class="form-group">
+                        <label for="imie">Imię</label>
+                        <input type="text" id="imie" name="imie" placeholder="Podaj swoje imie" required autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="nazwisko">Nazwisko</label>
+                        <input type="text" id="nazwisko" name="nazwisko" placeholder="Podaj swoje nazwisko" required autocomplete="family-name">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-next">Next</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="2">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Podaj email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone NUmber</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Podaj numer telefonu" required autocomplete="tel">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary btn-prev">Previous</button>
+                        <button type="button" class="btn btn-next">Next</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="3">
+                    <div class="form-group">
+                        <label for="haslo">Hasło</label>
+                        <input type="password" id="haslo" name="haslo" placeholder="Podaj haslo" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data urodzenia</label>
+                        <input type="date" id="data" name="data" placeholder="dd.mm.rrrr" required autocomplete="off">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary btn-prev">Previous</button>
+                        <button type="button" class="btn btn-next">Next</button>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="4">
+                    <div class="form-group">
+                        <label for="adres">Adres</label>
+                        <input type="text" id="adres" name="adres" placeholder="Podaj swoj adres" required autocomplete="street-address">
+                    </div>
+                    <div class="form-group">
+                        <label for="pesel">PESEL</label>
+                        <input type="text" id="pesel" name="pesel" placeholder="Podaj swoj PESEL" required pattern="\d{11}" maxlength="11" autocomplete="off">
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary btn-prev">Previous</button>
+                        <button type="button" class="btn btn-submit">Zakończ</button>
+                    </div>
+                </section>
+
+                <section class="form-step summary-step" data-step="5">
+                    <h2>Podsumowanie</h2>
+                    <div class="summary-content">
+                        <div class="summary-item">
+                            <strong>Imie:</strong>
+                            <span id="summary-imie"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Nazwisko:</strong>
+                            <span id="summary-nazwisko"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Email:</strong>
+                            <span id="summary-email"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Phone Number:</strong>
+                            <span id="summary-phone"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Haslo:</strong>
+                            <span id="summary-haslo"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Data urodzenia:</strong>
+                            <span id="summary-data"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>Adres:</strong>
+                            <span id="summary-adres"></span>
+                        </div>
+                        <div class="summary-item">
+                            <strong>PESEL:</strong>
+                            <span id="summary-pesel"></span>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

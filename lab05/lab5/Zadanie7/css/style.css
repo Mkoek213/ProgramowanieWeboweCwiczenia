@@ -1,0 +1,75 @@
+:root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.users {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.user-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.1);
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.user-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.contact-details {
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.contact-details span {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
