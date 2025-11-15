@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo by GR - Unsplash API Tester</title>
+    <title>Wyszukiwarka</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">📷 Demo by GR - Unsplash API Tester</div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search..." />
-            <button id="searchBtn">🔍</button>
+    <header class="app-header">
+        <div class="brand">Unsplash Tester</div>
+        <div class="search-wrap">
+            <input id="searchInput" type="search" placeholder="Wpisz słowo kluczowe i naciśnij Enter" aria-label="Szukaj zdjęć">
+            <button id="searchBtn" aria-label="Szukaj">🔍</button>
         </div>
     </header>
 
-    <main>
-        <button class="nav-btn left" id="prevBtn">&lt;</button>
-        <div class="gallery-container">
-            <div class="gallery" id="gallery"></div>
-        </div>
-        <button class="nav-btn right" id="nextBtn">&gt;</button>
+    <main class="app-main">
+        <button id="prevBtn" class="nav-button left" aria-label="Poprzednie">‹</button>
+
+        <section class="gallery-frame">
+            <div id="gallery" class="gallery-row"></div>
+        </section>
+
+        <button id="nextBtn" class="nav-button right" aria-label="Następne">›</button>
     </main>
 
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <button class="close-btn" id="closeBtn">✕</button>
-            <img id="lightboxImg" src="" alt="">
-            <div class="lightbox-info">
-                <p id="imageInfo"></p>
-            </div>
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <div class="lightbox-panel" role="dialog" aria-modal="true">
+            <button id="closeBtn" class="close">✕</button>
+            <img id="lightboxImg" src="" alt="" />
+            <div class="lightbox-meta"><p id="imageInfo"></p></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
 

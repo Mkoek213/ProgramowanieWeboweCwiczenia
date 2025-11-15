@@ -1,162 +1,149 @@
-const CLIENT_ID = "sDD6DO6Qrd5kCfVv8ciltWfVP40aZAAl4vCra9JpOYw";
+(() => {
+    const CLIENT_ID = 'Mm89kvfEqSoVo6z1CfDD_M7wq6-y7t65zTcZAYZJV3U';
+    const API_ENDPOINT = 'https://api.unsplash.com/search/photos';
 
-const API_URL = 'https://api.unsplash.com/search/photos';
+    let queryText = '';
+    let pageNum = 1;
+    let imagesStore = [];
+    let offset = 0;
 
-let currentQuery = '';
-let currentPage = 1;
-let allImages = [];
-let currentOffset = 0;
-const imagesPerPage = 30;
-const visibleImages = 8;
+    const IMAGES_PER_REQUEST = 30;
+    const VISIBLE_COUNT = 8;
 
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const gallery = document.getElementById('gallery');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const closeBtn = document.getElementById('closeBtn');
-const imageInfo = document.getElementById('imageInfo');
+    const el = {
+        input: document.getElementById('searchInput'),
+        btnSearch: document.getElementById('searchBtn'),
+        gallery: document.getElementById('gallery'),
+        prev: document.getElementById('prevBtn'),
+        next: document.getElementById('nextBtn'),
+        lightbox: document.getElementById('lightbox'),
+        lightboxImg: document.getElementById('lightboxImg'),
+        close: document.getElementById('closeBtn'),
+        info: document.getElementById('imageInfo')
+    };
 
-async function searchImages(query, page = 1) {
-    try {
-        const response = await fetch(
-            `${API_URL}?query=${query}&per_page=${imagesPerPage}&page=${page}&client_id=${CLIENT_ID}`
-        );
-        
-        if (!response.ok) {
-            throw new Error('API request failed');
-        }
-        
-        const data = await response.json();
-        return data.results;
-    } catch (error) {
-        console.error('Error fetching images:', error);
-        gallery.innerHTML = '<div class="error">Błąd pobierania zdjęć. Sprawdź API key.</div>';
-        return [];
-    }
-}
-
-async function performSearch() {
-    const query = searchInput.value.trim();
-    if (!query) return;
-    
-    if (CLIENT_ID === 'YOUR_UNSPLASH_CLIENT_ID') {
-        gallery.innerHTML = '<div class="error">Brak API key! Zobacz README.md</div>';
-        return;
-    }
-    
-    currentQuery = query;
-    currentPage = 1;
-    currentOffset = 0;
-    allImages = [];
-    
-    gallery.innerHTML = '<div class="loading">Ładowanie...</div>';
-    
-    const images = await searchImages(query, currentPage);
-    allImages = images;
-    
-    renderGallery();
-    updateButtons();
-}
-
-function renderGallery() {
-    gallery.innerHTML = '';
-    
-    if (allImages.length === 0) {
-        gallery.innerHTML = '<div class="error">Nie znaleziono zdjęć</div>';
-        return;
-    }
-    
-    const endIndex = Math.min(currentOffset + visibleImages, allImages.length);
-    
-    for (let i = currentOffset; i < endIndex; i++) {
-        const image = allImages[i];
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        
-        const img = document.createElement('img');
-        img.src = image.urls.small;
-        img.alt = image.alt_description || 'Unsplash image';
-        img.loading = 'lazy';
-        
-        item.addEventListener('dblclick', () => {
-            openLightbox(image);
+    async function fetchPhotos(q, page = 1) {
+        const params = new URLSearchParams({
+            query: q,
+            per_page: String(IMAGES_PER_REQUEST),
+            page: String(page),
+            client_id: CLIENT_ID
         });
-        
-        item.appendChild(img);
-        gallery.appendChild(item);
-    }
-}
 
-function openLightbox(image) {
-    lightboxImg.src = image.urls.regular;
-    imageInfo.innerHTML = `
-        Photo by <strong>${image.user.name}</strong><br>
-        Image ${allImages.indexOf(image) + 1} of ${allImages.length}
-    `;
-    lightbox.classList.add('active');
-}
-
-function closeLightbox() {
-    lightbox.classList.remove('active');
-}
-
-async function scrollNext() {
-    if (currentOffset + visibleImages >= allImages.length) {
-        currentPage++;
-        const newImages = await searchImages(currentQuery, currentPage);
-        
-        if (newImages.length > 0) {
-            allImages = [...allImages, ...newImages];
+        try {
+            const res = await fetch(`${API_ENDPOINT}?${params.toString()}`);
+            if (!res.ok) throw new Error('Network response was not OK');
+            const payload = await res.json();
+            return Array.isArray(payload.results) ? payload.results : [];
+        } catch (err) {
+            console.error('fetchPhotos error:', err);
+            showMessage('Błąd pobierania zdjęć. Sprawdź API key i połączenie.');
+            return [];
         }
     }
-    
-    if (currentOffset + 1 < allImages.length) {
-        currentOffset++;
+
+    function showMessage(text, isError = false) {
+        el.gallery.innerHTML = `<div class="${isError ? 'error' : 'loading'}">${text}</div>`;
+    }
+
+    async function performSearch() {
+        const q = el.input.value.trim();
+        if (!q) return;
+
+        queryText = q;
+        pageNum = 1;
+        offset = 0;
+        imagesStore = [];
+
+        if (!CLIENT_ID || CLIENT_ID === 'YOUR_UNSPLASH_CLIENT_ID') {
+            showMessage('Brak API key! Zobacz README.md', true);
+            return;
+        }
+
+        showMessage('Ładowanie...');
+        const results = await fetchPhotos(queryText, pageNum);
+        imagesStore = results.slice();
         renderGallery();
-        updateButtons();
+        updateControls();
     }
-}
 
-function scrollPrev() {
-    if (currentOffset > 0) {
-        currentOffset--;
-        renderGallery();
-        updateButtons();
+    function renderGallery() {
+        el.gallery.innerHTML = '';
+
+        if (!imagesStore.length) {
+            showMessage('Nie znaleziono zdjęć', true);
+            return;
+        }
+
+        const end = Math.min(offset + VISIBLE_COUNT, imagesStore.length);
+
+        for (let i = offset; i < end; i++) {
+            const imgData = imagesStore[i];
+            const wrapper = document.createElement('div');
+            wrapper.className = 'gallery-item';
+
+            const img = document.createElement('img');
+            img.src = imgData.urls.small;
+            img.alt = imgData.alt_description || 'Unsplash image';
+            img.loading = 'lazy';
+
+            wrapper.addEventListener('dblclick', () => openLightbox(imgData));
+
+            wrapper.appendChild(img);
+            el.gallery.appendChild(wrapper);
+        }
     }
-}
 
-function updateButtons() {
-    prevBtn.disabled = currentOffset === 0;
-    nextBtn.disabled = currentOffset + visibleImages >= allImages.length && allImages.length < imagesPerPage * currentPage;
-}
-
-searchBtn.addEventListener('click', performSearch);
-
-searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        performSearch();
+    function openLightbox(photo) {
+        el.lightboxImg.src = photo.urls.regular;
+        el.info.innerHTML = `Photo by <strong>${photo.user.name}</strong><br>Image ${imagesStore.indexOf(photo) + 1} of ${imagesStore.length}`;
+        el.lightbox.classList.add('active');
+        el.lightbox.setAttribute('aria-hidden', 'false');
     }
-});
 
-prevBtn.addEventListener('click', scrollPrev);
-nextBtn.addEventListener('click', scrollNext);
-
-closeBtn.addEventListener('click', closeLightbox);
-
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-        closeLightbox();
+    function closeLightbox() {
+        el.lightbox.classList.remove('active');
+        el.lightbox.setAttribute('aria-hidden', 'true');
+        el.lightboxImg.src = '';
     }
-});
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-        closeLightbox();
+    async function next() {
+        if (offset + VISIBLE_COUNT >= imagesStore.length) {
+            pageNum++;
+            const more = await fetchPhotos(queryText, pageNum);
+            if (more.length) imagesStore = imagesStore.concat(more);
+        }
+
+        if (offset + 1 < imagesStore.length) {
+            offset++;
+            renderGallery();
+            updateControls();
+        }
     }
-});
 
-gallery.innerHTML = '<div class="loading">Wpisz słowo kluczowe i naciśnij Enter</div>';
+    function prev() {
+        if (offset > 0) {
+            offset--;
+            renderGallery();
+            updateControls();
+        }
+    }
+
+    function updateControls() {
+        el.prev.disabled = offset === 0;
+        const noMoreLoaded = offset + VISIBLE_COUNT >= imagesStore.length;
+        const couldRequestMore = imagesStore.length >= IMAGES_PER_REQUEST * pageNum;
+        el.next.disabled = noMoreLoaded && !couldRequestMore;
+    }
+
+    el.btnSearch.addEventListener('click', performSearch);
+    el.input.addEventListener('keydown', (e) => { if (e.key === 'Enter') performSearch(); });
+    el.prev.addEventListener('click', prev);
+    el.next.addEventListener('click', next);
+
+    el.close.addEventListener('click', closeLightbox);
+    el.lightbox.addEventListener('click', (e) => { if (e.target === el.lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && el.lightbox.classList.contains('active')) closeLightbox(); });
+
+})();
 
