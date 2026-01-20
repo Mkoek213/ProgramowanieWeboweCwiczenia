@@ -1,0 +1,16 @@
+.footer {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-top: 1px solid #e5e7eb;
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+
+
+
+

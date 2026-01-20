@@ -1,0 +1,102 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "admin@admin.com",
+            "password": "$2b$10$cFFeZQy7ht7phdZ.p",
+            "role": "admin",
+            "name": "Administrator",
+            "isBanned": false
+        },
+        {
+            "id": 2,
+            "email": "jan@lekarz.pl",
+            "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+            "role": "doctor",
+            "name": "Dr Jan Kowalski",
+            "isBanned": false
+        },
+        {
+            "id": 3,
+            "email": "pacjent@test.pl",
+            "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+            "role": "patient",
+            "name": "Maria Testowa",
+            "isBanned": false
+        }
+    ],
+    "doctors": [
+        {
+            "id": "1",
+            "name": "Dr Jan Kowalski",
+            "specialization": "Kardiolog",
+            "price": 150,
+            "description": "Doświadczony kardiolog z 15-letnim stażem. Specjalizuje się w diagnostyce i leczeniu chorób serca.",
+            "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
+            "reviews": [],
+            "schedule": []
+        },
+        {
+            "id": "2",
+            "name": "Dr Anna Nowak",
+            "specialization": "Dermatolog",
+            "price": 200,
+            "description": "Specjalista dermatologii z doświadczeniem w leczeniu chorób skóry i kosmetologii.",
+            "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300",
+            "reviews": [],
+            "schedule": []
+        }
+    ],
+    "appointments": [],
+    "availabilities": [
+        {
+            "id": "av1",
+            "doctorId": "1",
+            "type": "cyclic",
+            "startDate": "2026-01-20",
+            "endDate": "2026-03-31",
+            "dayMask": [
+                true,
+                true,
+                false,
+                true,
+                true,
+                false,
+                false
+            ],
+            "timeRanges": [
+                {
+                    "from": "08:00",
+                    "to": "12:00"
+                },
+                {
+                    "from": "14:00",
+                    "to": "18:00"
+                }
+            ]
+        },
+        {
+            "id": "av2",
+            "doctorId": "2",
+            "type": "cyclic",
+            "startDate": "2026-01-20",
+            "endDate": "2026-03-31",
+            "dayMask": [
+                true,
+                false,
+                true,
+                false,
+                true,
+                true,
+                false
+            ],
+            "timeRanges": [
+                {
+                    "from": "09:00",
+                    "to": "15:00"
+                }
+            ]
+        }
+    ],
+    "absences": []
+}

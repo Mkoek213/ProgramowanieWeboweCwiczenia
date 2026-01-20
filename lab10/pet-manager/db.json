@@ -1,0 +1,54 @@
+{
+  "animals": [
+    {
+      "id": "2",
+      "name": "B",
+      "category": "Kot",
+      "age": 3,
+      "weight": 5,
+      "isFavorite": true
+    },
+    {
+      "id": "4",
+      "name": "D",
+      "category": "Kot",
+      "age": 144,
+      "weight": 2,
+      "isFavorite": false
+    },
+    {
+      "id": "c276",
+      "name": "F",
+      "category": "Ptak",
+      "age": 3,
+      "weight": 4,
+      "isFavorite": false
+    },
+    {
+      "id": "18ee",
+      "name": "dsad",
+      "category": "Kot",
+      "age": 11,
+      "weight": 22,
+      "isFavorite": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Pies"
+    },
+    {
+      "id": "2",
+      "name": "Kot"
+    },
+    {
+      "id": "3",
+      "name": "Ptak"
+    },
+    {
+      "id": "6f98",
+      "name": "gg"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+                 Programowanie Aplikacji Webowych
+                                 laboratorium 11
+Cel zajęć:
+Celem laboratorium jest przećwiczenie zagadnień związanych z obsługą rzeczywistych
+danych produkcyjnych pochodzących z serwera z danymi. Nasze dane będą w sposób
+trwały przechowywane po stronie Backendu.
+
+
+
+Tworzenie backendu:
+Potrzebujemy wiec jakiegoś mechanizmu zapisu danych w sposób trwały. W tym celu
+musimy skorzystać z funkcjonalności serwera aplikacyjnego (backend) z którym będziemy
+komunikować się za pomocą wywołań REST. Interesuje nas oczywiście tylko rozwiązanie
+bazujące na stosie JS.
+Są trzy sposoby na realizacje tego zagadnienia:
+•     wykorzystanie z lokalnego pliku json pełniącego role lokalnego repozytorium
+danych ( serwowanego za pomocą json-server) zrealizowane w lab 10.
+•      Skorzystanie z gotowej platformy zbudowanej w oparciu o NodeJS – Google
+Firebase (ścieżka łatwiejsza)
+•     Samodzielne zbudowanie serwera aplikacyjnego w oparciu o NodeJS i moduł
+Express. (ścieżka trudniejsza)
+
+
+Ścieżka łatwiejsza.
+Do tego celu użyjemy gotowe środowisko backendowe – Firebase. W zasadzie cała nasza
+aktywność sprowadzi się do stworzenia konta oraz przygotowania danych w dostępnej bazie
+danych. Do wyboru mamy bazę typu RealTime lub FireStore gwarantujące aktualizacje
+naszego Frontendu w przypadku modyfikacji danych w bazie.
+
+
+
+Informacje wstępne na temat Firebase.
+
+Firebase to tzw. BaaS (Backend as a Service ), który umożliwia min. przechowywanie danych
+w formacie JSON oraz plików binarnych (np. jpg, mp4). Firebase dostarcza nam dwie bazy
+danych typu real-time database, gdzie komunikacja z serwerem jest oparta o Websockets,
+dzięki czemu po aktualizacji danych, klient automatycznie dostaje najświeższe dane. Obsługa
+jest banalnie prosta, w podstawowym zakresie można niemalże wszystko wygenerować z
+panelu użytkownika! Dobre rozwiązanie na początek, gdy chce się postawić w szybkim czasie
+serwer z danymi a nie ma się czasu lub umiejętności aby zrobić to samodzielnie.
+
+Zanim rozpoczniemy komunikację z serwerem, musimy oczywiście sobie go wcześniej
+przygotować. Rozpoczynamy od odwiedzenia strony www.firebase.com, założenia konta, a
+następnie po zalogowaniu klikamy przycisk „OTWÓRZ KONSOLĘ” w prawym górnym rogu:
+
+
+
+
+W celu komunikacji z naszym kontem w Firebase z poziomu tworzonej aplikacji webowej
+należy użyć blibliotekę firebase. Pozwoli nam się zsynchronizować z danymi w czasie
+rzeczywistym, oraz dostarcza bardzo dobre API do logowania i monitorowania
+uwierzytelniania użytkownika.
+Rozpoczynamy od instalacji paczki:
+
+ npm install firebase
+
+Po instalacji, wracamy do panelu Firebase i przechodzimy do ustawień projektu, klikając na
+zębatkę obok „PROJECT OVERVIEW” w lewym menu.
+Scrollujemy nieco w dół i klikamy „Dodaj Firebase do swojej aplikacji internetowej”. Pojawia
+się okienko z danymi projektu:
+
+
+
+
+Podpięcie się pod Firebase
+Wracamy do aplikacji react i tworzymy w katalogu src plik konfiguracyjny dla Firebase np.
+firebaseConfig.ts. Kopiujemy do niego dane konfiguracyjne projektu zdefiniowane w sekcji
+powyżej
+
+import firebase from "firebase/app";
+import "firebase/database";
+
+
+// miejsce na dane projektu – dostępne z sekcji project setting
+let config = {
+  apiKey: "xxx",
+  authDomain: "xxx",
+  databaseURL: "xxx",
+  projectId: "xxx",
+  storageBucket: "xxx",
+  messagingSenderId: "xxx",
+  appId: "xxx",
+};
+const app = firebase.initializeApp(config);
+export default app;
+
+
+Teraz nasza aplikacja staje się świadoma backendu dostarczonego przez Firebase.
+
+
+Obsługa bazy danych
+Głównym celem użycia FireBase było skorzystanie z wbudowanej bazy danej, która miała za
+zadanie wspierać operacje CRUD na obiektach Json.
+
+Pierwszym krokiem jest stworzenie w bazie przykładowych danych. Możemy użyć RealTime
+DataBase lub Cloud Firestore. W obu przypadkach tworzenie danych w bazie jest banalnie
+proste.
+Nie wolno zapomnieć o ustawieni reguł dostępowych – domyślnie obie wartości są
+ustawione na false.
+
+
+
+
+lub tak gdy zrezygnowaliśmy z autoryzacji
+
+
+
+
+W przypadku wybrania wersji Cloud
+Lub
+W zależności od użytej bazy :
+
+
+realDatabase
+
+szczegółowa dokumentacja (https://firebase.google.com/docs/database/web/lists-of-
+data?hl=pl)
+
+
+     1. operacja Odczytu
+
+import app from "../firebaseConfig";
+import { getDatabase, ref, get } from "firebase/database";
+
+
+const db = getDatabase(app);
+const dbRef = ref(db, "products");     // zdefiniuj którą gałąź bazy chcesz odczytać
+
+
+
+- odczyt jednorazowy
+const snapshot = await get(dbRef);      // odczyt zawartości wskazanego fragmentu
+if (snapshot.exists()) {
+    // odczyta zawartości za pomocą operacji val() np. snapshot.val();
+} else {
+        alert("error");
+}
+
+
+- odczyt automatyczny przy zmianie danych w bazie
+onValue(dbRef, (snapshot) => {
+    const data = snapshot.val();
+    if (!!data ) {
+           console.log(data);
+    } else {
+         console.log('Dane nie istnieja');
+    }
+
+         2. operacja Zapisu do bazy
+
+const db = getDatabase(app);
+const newDocRef = push(ref(db, "products"));          // Tworzy nowy pusty obiekt w bazie z wygenerowanym
+                                                          // automatycznie id
+set(newDocRef, dane).then( () => {           // wpisz nowe dane do stworzonego właśnie obiektu
+        alert("dane zapisane poprawnie ")
+    }).catch((error) => {
+        alert("error: ", error.message);
+    })
+
+
+
+         3. operacja aktualizacji obiektu w bazie
+
+const db = getDatabase(app);
+    const newDocRef = ref(db, "products/"+firebaseId);
+    set(newDocRef, nowe_dane).then( () => {
+        alert("dane nadpisane poprawnie ")
+    }).catch((error) => {
+        alert("error: ", error.message);
+    })
+
+
+
+         4. operacja usunięcia obiektu w bazie
+const db = getDatabase(app);
+const dbRef = ref(db, "produtcs/"+productId);
+await remove(dbRef);
+FireStore
+
+szczegółowa dokumentacja (https://firebase.google.com/docs/firestore/manage-
+data/add-data?hl=pl)
+--------------------------------------------------------------------------------------------------------------------------
+
+Realizacja Backend
+Możliwa jest realizacja backendu w wersji:
+Łatwiejszej:
+Zadanie 1. Aplikacja do konsultacji lekarskich – Integracja z FireBase (3 pkt)
+Na podstawie materiałów znajdujących się na początku lab zintegruj swoja aplikację z
+platformą Firebase. Niech dane o zaplanowanych terminach konsultacji oraz wszystkich
+ograniczeniach i zarezerwowanych konsultacjach pochodzą z Firebase. Pozwoli to nam
+na rzeczywistą persystencje danych. Wybierz dowolny typ bazy danych znajdujący się w
+Firebase i zaimplementuj usługę pozwalająca na odczyt, dodawanie, modyfikacje lub
+usuwanie nowej pozycji z bazy.
+Lub
+
+Trudniejszej:
+
+Zadanie 2. Aplikacja do zdalnych konsultacji lekarskich – Własny serwer REST API
+(7 pkt)
+W wersji trudniejszej wymagane jest samodzielne napisanie serwera RESTAPI z
+wykorzystaniem NodeJS/ExpressJS. Do przechowywania danych danych możesz użyć bazy
+MongoDB          znajdującej      się        w       chmurze         pod       adresem
+https://www.mongodb.com/atlas/database.             Alternatywnie przy samodzielnej
+implementacji serwera możesz skorzystać z baz mySQL używać np. Squalize do komunikacji
+Materiały potrzebne do realizacji znajdziesz w moich materiałach wykładowych. Po
+zaimplementowaniu serwera przetestuj jego funkcjonalność używając narzędzi typu np. curl
+lub Postman, ewentualnie zainstaluj rozszerzenie Thunder Client w Visual Studio Code.
+W aplikacji klienckiej zaimplementuj usługę do komunikacji z serwerem aplikacyjnym.
+Następnie wywołaj usług w tych komponentach, które pozwolą Ci na zasilania danymi
+całej aplikacji oraz obsłużą metody do usuwania, dodawania i modyfikacji danych w
+aplikacji.
+Punktacja szczegółowa:
+2 pkt poprawne zdefiniowanie modelu + połączenie z bazami danych
+2 pkt zdefiniowanie i implementacja routingu i endpointów ( uwzględniając konwencje
+RestAPI)
+3 pkt - zdefiniowanie kontrolerów dla poszczególnych endpoints
+Zadanie 3. Aplikacja do konsultacji lekarskich – dynamiczny wybór źródła danych
+( 1 pkt)
+Zintegruj w swojej aplikacji wszystkie wersje realizacji backendu na które się
+zdecydowałeś. Do wyboru masz albo wersje z dwoma opcjami: (Lokalny Json, Firebase) lub
+trzema (Lokalny Json, Firebase, Własny serwer). Za pomocą np. opcji wyboru określ z
+którą wersja backendu chcesz współpracować. Odpowiednio zaprojektuj swoja aplikację tak
+aby można było dynamicznie zmieniać zródla danych.
+

@@ -1,0 +1,42 @@
+.animal-form-page {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.select-container,
+.new-cat-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-submit {
+    background-color: var(--success-color);
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
