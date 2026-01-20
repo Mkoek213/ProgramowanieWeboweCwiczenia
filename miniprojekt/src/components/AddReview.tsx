@@ -35,10 +35,10 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
 
             try {
                 // Get user's appointments with this doctor
-                const appointments = await backend.getAppointmentsByPatient(user.id);
+                const appointments = await backend.getAppointmentsByPatient(String(user.id));
                 const attendedThisDoctor = appointments.some(
                     (a: Appointment) => a.doctorId === doctorId &&
-                        (a.status === 'completed' || a.status === 'booked')
+                        a.status === 'completed'  // Only completed appointments count as "attended"
                 );
 
                 // Check if already reviewed this doctor

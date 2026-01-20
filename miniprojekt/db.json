@@ -1,102 +1,315 @@
 {
-    "users": [
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@admin.com",
+      "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+      "role": "admin",
+      "name": "Administrator",
+      "isBanned": false
+    },
+    {
+      "id": 3,
+      "email": "pacjent@test.pl",
+      "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+      "role": "patient",
+      "name": "Maria Testowa",
+      "isBanned": false
+    },
+    {
+      "id": "1768947641028",
+      "email": "aa@lekarz.pl",
+      "password": "c20",
+      "role": "doctor",
+      "name": "aa"
+    },
+    {
+      "id": "1768947912866",
+      "email": "aa@test",
+      "password": "$2b$10$Tz5dyWBYTQUZS3x6MUNfGOcc7CjIo8S8yQCJ9T4VJ8UMwGVuALw6y",
+      "role": "doctor",
+      "name": "aa"
+    },
+    {
+      "id": 1768948681445,
+      "email": "p@t",
+      "password": "$2b$10$i7uTROf/I3/TIKfDlGbkGuWJFXIO21OCvvqH4ZMqo8se6h3hyev7W",
+      "name": "p",
+      "role": "patient",
+      "isBanned": false
+    }
+  ],
+  "doctors": [
+    {
+      "id": "1",
+      "name": "Dr Jan Kowalski",
+      "specialization": "Kardiolog",
+      "price": 150,
+      "description": "Doświadczony kardiolog z 15-letnim stażem. Specjalizuje się w diagnostyce i leczeniu chorób serca.",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
+      "reviews": [],
+      "schedule": []
+    },
+    {
+      "id": "2",
+      "name": "Dr Anna Nowak",
+      "specialization": "Dermatolog",
+      "price": 200,
+      "description": "Specjalista dermatologii z doświadczeniem w leczeniu chorób skóry i kosmetologii.",
+      "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300",
+      "reviews": [],
+      "schedule": []
+    },
+    {
+      "id": "1768947912866",
+      "name": "aa",
+      "specialization": "aa",
+      "price": 100,
+      "description": "Nowy lekarz w systemie",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
+      "reviews": [],
+      "schedule": []
+    }
+  ],
+  "appointments": [
+    {
+      "id": "1768944182184",
+      "doctorId": "2",
+      "patientId": "3",
+      "date": "2026-01-21 09:00",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "imi",
+      "patientGender": "male",
+      "patientAge": 21,
+      "notes": "aaa",
+      "cancelledAt": "2026-01-20T21:49:54.133Z",
+      "cancelReason": "Odwołane przez pacjenta"
+    },
+    {
+      "id": "1768945180208",
+      "doctorId": "2",
+      "patientId": "3",
+      "date": "2026-01-21 09:00",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "mik",
+      "patientGender": "male",
+      "patientAge": 32,
+      "cancelledAt": "2026-01-20T21:49:55.458Z",
+      "cancelReason": "Odwołane przez pacjenta"
+    },
+    {
+      "id": "1768945858560",
+      "doctorId": "2",
+      "patientId": "3",
+      "date": "2026-01-21 09:00",
+      "duration": 1,
+      "status": "booked",
+      "consultationType": "first_visit",
+      "patientName": "mi",
+      "patientGender": "male",
+      "patientAge": 21,
+      "notes": "aaa"
+    },
+    {
+      "id": "1768947996298",
+      "doctorId": "1768947912866",
+      "patientId": "1768947986423",
+      "date": "2026-01-24 09:00",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "aa",
+      "patientGender": "male",
+      "patientAge": 21,
+      "notes": "aa",
+      "cancelledAt": "2026-01-20T22:26:56.706Z",
+      "cancelReason": "Odwołane przez lekarza"
+    },
+    {
+      "id": "1768948163600",
+      "doctorId": "1768947912866",
+      "patientId": "1768948137676",
+      "date": "2026-01-24 08:00",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "aa",
+      "patientGender": "male",
+      "notes": "aa",
+      "cancelledAt": "2026-01-20T22:29:42.678Z",
+      "cancelReason": "Odwołane przez lekarza"
+    },
+    {
+      "id": "1768948486610",
+      "doctorId": "1768947912866",
+      "patientId": "1768948411734",
+      "date": "2026-01-24 08:30",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "aa",
+      "patientGender": "male",
+      "patientAge": 21,
+      "notes": "aa",
+      "cancelledAt": "2026-01-20T22:35:19.730Z",
+      "cancelReason": "Odwołane przez lekarza"
+    },
+    {
+      "id": "1768948688607",
+      "doctorId": "1768947912866",
+      "patientId": "1768948681445",
+      "date": "2026-01-24 08:00",
+      "duration": 1,
+      "status": "cancelled",
+      "consultationType": "first_visit",
+      "patientName": "11",
+      "patientGender": "male",
+      "patientAge": 11,
+      "notes": "11",
+      "cancelledAt": "2026-01-20T22:38:20.931Z",
+      "cancelReason": "Odwołane przez lekarza"
+    }
+  ],
+  "availabilities": [
+    {
+      "id": "av2",
+      "doctorId": "2",
+      "type": "cyclic",
+      "startDate": "2026-01-20",
+      "endDate": "2026-03-31",
+      "dayMask": [
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      "timeRanges": [
         {
-            "id": 1,
-            "email": "admin@admin.com",
-            "password": "$2b$10$cFFeZQy7ht7phdZ.p",
-            "role": "admin",
-            "name": "Administrator",
-            "isBanned": false
-        },
-        {
-            "id": 2,
-            "email": "jan@lekarz.pl",
-            "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
-            "role": "doctor",
-            "name": "Dr Jan Kowalski",
-            "isBanned": false
-        },
-        {
-            "id": 3,
-            "email": "pacjent@test.pl",
-            "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
-            "role": "patient",
-            "name": "Maria Testowa",
-            "isBanned": false
+          "from": "09:00",
+          "to": "15:00"
         }
-    ],
-    "doctors": [
+      ]
+    },
+    {
+      "id": "1768947165249",
+      "doctorId": "2",
+      "type": "cyclic",
+      "startDate": "2026-01-21",
+      "endDate": "2026-01-27",
+      "dayMask": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true
+      ],
+      "timeRanges": [
         {
-            "id": "1",
-            "name": "Dr Jan Kowalski",
-            "specialization": "Kardiolog",
-            "price": 150,
-            "description": "Doświadczony kardiolog z 15-letnim stażem. Specjalizuje się w diagnostyce i leczeniu chorób serca.",
-            "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
-            "reviews": [],
-            "schedule": []
+          "from": "08:00",
+          "to": "12:00"
         },
         {
-            "id": "2",
-            "name": "Dr Anna Nowak",
-            "specialization": "Dermatolog",
-            "price": 200,
-            "description": "Specjalista dermatologii z doświadczeniem w leczeniu chorób skóry i kosmetologii.",
-            "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300",
-            "reviews": [],
-            "schedule": []
+          "from": "14:00",
+          "to": "18:00"
         }
-    ],
-    "appointments": [],
-    "availabilities": [
+      ]
+    },
+    {
+      "id": "1768947494389",
+      "doctorId": "1",
+      "type": "cyclic",
+      "startDate": "2026-01-20",
+      "endDate": "2026-02-20",
+      "dayMask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "timeRanges": [
         {
-            "id": "av1",
-            "doctorId": "1",
-            "type": "cyclic",
-            "startDate": "2026-01-20",
-            "endDate": "2026-03-31",
-            "dayMask": [
-                true,
-                true,
-                false,
-                true,
-                true,
-                false,
-                false
-            ],
-            "timeRanges": [
-                {
-                    "from": "08:00",
-                    "to": "12:00"
-                },
-                {
-                    "from": "14:00",
-                    "to": "18:00"
-                }
-            ]
+          "from": "08:00",
+          "to": "12:00"
+        }
+      ]
+    },
+    {
+      "id": "1768947520781",
+      "doctorId": "1",
+      "type": "one_time",
+      "date": "2026-02-11",
+      "slots": [
+        "09:00",
+        "10:00"
+      ]
+    },
+    {
+      "id": "1768947956390",
+      "doctorId": "1768947912866",
+      "type": "cyclic",
+      "startDate": "2026-01-20",
+      "endDate": "2026-04-20",
+      "dayMask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "timeRanges": [
+        {
+          "from": "08:00",
+          "to": "12:00"
         },
         {
-            "id": "av2",
-            "doctorId": "2",
-            "type": "cyclic",
-            "startDate": "2026-01-20",
-            "endDate": "2026-03-31",
-            "dayMask": [
-                true,
-                false,
-                true,
-                false,
-                true,
-                true,
-                false
-            ],
-            "timeRanges": [
-                {
-                    "from": "09:00",
-                    "to": "15:00"
-                }
-            ]
+          "from": "14:00",
+          "to": "18:00"
         }
-    ],
-    "absences": []
+      ]
+    }
+  ],
+  "absences": [
+    {
+      "id": "1768947194893",
+      "doctorId": "2",
+      "startDate": "2026-01-09",
+      "endDate": "2026-01-29",
+      "reason": "a"
+    },
+    {
+      "id": "1768947311724",
+      "doctorId": "2",
+      "startDate": "2026-01-21",
+      "endDate": "2026-01-23",
+      "reason": "aa"
+    },
+    {
+      "id": "1768947453867",
+      "doctorId": "1",
+      "startDate": "2026-01-21",
+      "endDate": "2026-01-23",
+      "reason": "aa"
+    },
+    {
+      "id": "1768947968523",
+      "doctorId": "1768947912866",
+      "startDate": "2026-01-20",
+      "endDate": "2026-01-23",
+      "reason": "aa"
+    }
+  ]
 }

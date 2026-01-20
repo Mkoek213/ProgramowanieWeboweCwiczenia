@@ -58,7 +58,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         // Ensure patient ID is set
         const apptWithPatient: Appointment = {
             ...appointment,
-            patientId: user.id
+            patientId: String(user.id)
         };
 
         // Check for duplicates
@@ -97,8 +97,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const confirmedAppt: Appointment = {
                 ...appt,
                 status: 'booked',
-                patientId: user.id, // Ensure patientId is set
-                bookedAt: new Date().toISOString() // Add timestamp
+                patientId: String(user.id), // Ensure patientId is set as string
             };
 
             try {

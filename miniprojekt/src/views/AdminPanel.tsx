@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { useAuth, type PersistenceMode } from '../contexts/AuthContext';
 import { useBackend } from '../contexts/BackendContext';
 import type { User, Doctor } from '../models/types';
-import axios from 'axios';
+import { authService } from '../services/authService';
 
 export const AdminPanel = () => {
     const { user, persistenceMode, setPersistenceMode } = useAuth();
-    const { backend, backendType, switchBackend } = useBackend();
+    const { backend, backendType } = useBackend();
     const [users, setUsers] = useState<User[]>([]);
     const [doctors, setDoctors] = useState<Doctor[]>([]);
     const [activeTab, setActiveTab] = useState<'doctors' | 'users' | 'settings'>('doctors');
@@ -15,21 +15,11 @@ export const AdminPanel = () => {
     const [newDrName, setNewDrName] = useState('');
     const [newDrSpec, setNewDrSpec] = useState('');
     const [newDrPrice, setNewDrPrice] = useState(100);
+    const [newDrEmail, setNewDrEmail] = useState('');
     const [newDrPassword, setNewDrPassword] = useState('');
 
     // Datalist source for specs
     const [availableSpecs, setAvailableSpecs] = useState<string[]>([]);
-
-    // Simple hash function
-    const simpleHash = (str: string): string => {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-        }
-        return Math.abs(hash).toString(16);
-    };
 
     useEffect(() => {
         if (user?.role === 'admin') {
@@ -49,7 +39,11 @@ export const AdminPanel = () => {
         const newStatus = !u.isBanned;
         if (backendType === 'json') {
             try {
-                await axios.patch(`http://localhost:3000/users/${u.id}`, { isBanned: newStatus });
+                await authService.authFetch(`http://localhost:3000/users/${u.id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isBanned: newStatus })
+                });
                 setUsers(users.map(us => us.id === u.id ? { ...us, isBanned: newStatus } : us));
             } catch (e) { alert('Err: ' + e); }
         }
@@ -59,12 +53,12 @@ export const AdminPanel = () => {
         if (!window.confirm("Czy na pewno chcesz usunąć tego lekarza?")) return;
 
         if (backendType === 'json') {
-            await axios.delete(`http://localhost:3000/doctors/${id}`);
+            await authService.authFetch(`http://localhost:3000/doctors/${id}`, { method: 'DELETE' });
             // Also try to delete associated user
             const docUser = users.find(u => u.id === id || u.email.includes('@lekarz'));
             if (docUser) {
                 try {
-                    await axios.delete(`http://localhost:3000/users/${docUser.id}`);
+                    await authService.authFetch(`http://localhost:3000/users/${docUser.id}`, { method: 'DELETE' });
                 } catch { }
             }
             refreshData();
@@ -77,14 +71,18 @@ export const AdminPanel = () => {
         const doctor = doctors.find(d => d.id === doctorId);
         if (doctor && backendType === 'json') {
             const updatedReviews = doctor.reviews.filter(r => r.id !== reviewId);
-            await axios.patch(`http://localhost:3000/doctors/${doctorId}`, { reviews: updatedReviews });
+            await authService.authFetch(`http://localhost:3000/doctors/${doctorId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reviews: updatedReviews })
+            });
             refreshData();
         }
     };
 
     const handleAddDoctor = async () => {
-        if (!newDrName || !newDrSpec) {
-            alert('Podaj nazwę i specjalizację lekarza');
+        if (!newDrName || !newDrSpec || !newDrEmail || !newDrPassword) {
+            alert('Podaj wszystkie dane lekarza (nazwa, specjalizacja, email, hasło)');
             return;
         }
 
@@ -101,19 +99,24 @@ export const AdminPanel = () => {
 
         const newUser: User = {
             id: newDoc.id,
-            email: newDrName.replace(/\s/g, '').toLowerCase() + "@lekarz.pl",
-            password: newDrPassword ? simpleHash(newDrPassword) : undefined,
+            email: newDrEmail,
+            password: newDrPassword, // Server will hash with bcrypt
             role: 'doctor',
             name: newDrName
         };
 
         if (backendType === 'json') {
             await backend.addDoctor(newDoc);
-            await axios.post('http://localhost:3000/users', newUser);
-            alert(`Dodano lekarza!\nLogin: ${newUser.email}\nHasło: ${newDrPassword || '(brak)'}`);
+            await authService.authFetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser)
+            });
+            alert(`Dodano lekarza!\nLogin: ${newUser.email}`);
             refreshData();
             setNewDrName('');
             setNewDrSpec('');
+            setNewDrEmail('');
             setNewDrPassword('');
         }
     };
@@ -185,8 +188,15 @@ export const AdminPanel = () => {
                             />
                             <input
                                 className="border p-2 rounded"
+                                type="email"
+                                placeholder="Email (login)"
+                                value={newDrEmail}
+                                onChange={e => setNewDrEmail(e.target.value)}
+                            />
+                            <input
+                                className="border p-2 rounded"
                                 type="password"
-                                placeholder="Hasło (opcjonalne)"
+                                placeholder="Hasło"
                                 value={newDrPassword}
                                 onChange={e => setNewDrPassword(e.target.value)}
                             />
@@ -268,8 +278,8 @@ export const AdminPanel = () => {
                                     <td className="p-2">{u.name || '-'}</td>
                                     <td className="p-2">
                                         <span className={`px-2 py-1 rounded text-xs ${u.role === 'admin' ? 'bg-purple-100 text-purple-800' :
-                                                u.role === 'doctor' ? 'bg-blue-100 text-blue-800' :
-                                                    'bg-gray-100 text-gray-800'
+                                            u.role === 'doctor' ? 'bg-blue-100 text-blue-800' :
+                                                'bg-gray-100 text-gray-800'
                                             }`}>
                                             {u.role}
                                         </span>
@@ -286,8 +296,8 @@ export const AdminPanel = () => {
                                             <button
                                                 onClick={() => toggleBan(u)}
                                                 className={`text-sm px-3 py-1 rounded ${u.isBanned
-                                                        ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                                                        : 'bg-red-100 text-red-700 hover:bg-red-200'
+                                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                                    : 'bg-red-100 text-red-700 hover:bg-red-200'
                                                     }`}
                                             >
                                                 {u.isBanned ? 'Odbanuj' : 'Zbanuj'}
@@ -306,13 +316,10 @@ export const AdminPanel = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white p-6 rounded-lg shadow">
                         <h3 className="font-bold text-lg mb-4">🗄️ Źródło danych</h3>
-                        <p className="text-gray-600 mb-2">Aktualnie: <strong>{backendType.toUpperCase()}</strong></p>
-                        <button
-                            onClick={() => switchBackend(backendType === 'json' ? 'firebase' : 'json')}
-                            className="bg-blue-100 text-blue-800 px-4 py-2 rounded hover:bg-blue-200"
-                        >
-                            Przełącz na {backendType === 'json' ? 'Firebase' : 'JSON Server'}
-                        </button>
+                        <p className="text-gray-600 mb-2">Aktualnie: <strong>JSON Server</strong></p>
+                        <p className="text-sm text-gray-400">
+                            Dane są przechowywane lokalnie w pliku db.json
+                        </p>
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow">
@@ -324,8 +331,8 @@ export const AdminPanel = () => {
                                     key={m}
                                     onClick={() => setPersistenceMode(m)}
                                     className={`px-4 py-2 rounded border ${persistenceMode === m
-                                            ? 'bg-purple-600 text-white border-purple-600'
-                                            : 'hover:bg-gray-100'
+                                        ? 'bg-purple-600 text-white border-purple-600'
+                                        : 'hover:bg-gray-100'
                                         }`}
                                 >
                                     {m}

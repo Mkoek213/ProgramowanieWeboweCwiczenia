@@ -7,6 +7,7 @@ import type { Doctor, Appointment, Availability, Absence } from '../models/types
 import { WeeklyCalendar } from '../components/WeeklyCalendar';
 import { BookingModal } from '../components/BookingModal';
 import { AddReview } from '../components/AddReview';
+import { NotificationPolling } from '../components/NotificationPolling';
 import axios from 'axios';
 
 export const DoctorDetail = () => {
@@ -27,6 +28,7 @@ export const DoctorDetail = () => {
     // Reply state for reviews
     const [replyText, setReplyText] = useState('');
     const [replyingTo, setReplyingTo] = useState<string | null>(null);
+    const [notificationToast, setNotificationToast] = useState<string | null>(null);
 
     const loadData = async () => {
         if (!id) return;
@@ -53,6 +55,27 @@ export const DoctorDetail = () => {
             alert("Zaloguj się aby zarezerwować wizytę");
             return;
         }
+
+        // Only patients can book appointments
+        if (user.role !== 'patient') {
+            alert("Tylko pacjenci mogą rezerwować wizyty");
+            return;
+        }
+
+        // Check if this slot is already booked
+        const slotDateTime = `${date} ${time}`;
+        const existingBooking = appointments.find(appt => {
+            if (appt.status === 'cancelled') return false;
+            const apptTime = appt.date.split(' ')[1] || '';
+            const apptDate = appt.date.split(' ')[0] || '';
+            return apptDate === date && apptTime === time;
+        });
+
+        if (existingBooking) {
+            alert("Ten slot jest już zarezerwowany. Wybierz inny termin.");
+            return;
+        }
+
         setSelectedDate(date);
         setSelectedTime(time);
         setShowBookingModal(true);
@@ -62,6 +85,13 @@ export const DoctorDetail = () => {
         addToCart(appointment);
         setShowBookingModal(false);
         alert("Dodano do koszyka! Przejdź do 'Moje Wizyty' aby sfinalizować rezerwację.");
+    };
+
+    const handleNotificationUpdate = (message: string) => {
+        setNotificationToast(message);
+        setTimeout(() => setNotificationToast(null), 5000); // Hide after 5 seconds
+        // Also reload data to show updates
+        loadData();
     };
 
     const handleReply = async (reviewId: string) => {
@@ -88,6 +118,19 @@ export const DoctorDetail = () => {
 
     return (
         <div className="p-4">
+            {/* Real-time notification polling */}
+            <NotificationPolling
+                doctorId={doctor.id}
+                isActive={true}
+                onUpdate={handleNotificationUpdate}
+            />
+
+            {/* Toast notification */}
+            {notificationToast && (
+                <div className="fixed top-4 right-4 z-50 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+                    {notificationToast}
+                </div>
+            )}
             {/* Doctor Info Card */}
             <div className="bg-white p-6 rounded-lg shadow mb-6">
                 <div className="flex flex-col md:flex-row gap-6">

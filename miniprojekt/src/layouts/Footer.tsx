@@ -21,6 +21,10 @@ export const Footer = () => {
             } catch { }
         };
         fetchStats();
+
+        // Refresh stats every 5 seconds
+        const interval = setInterval(fetchStats, 5000);
+        return () => clearInterval(interval);
     }, [backend]);
 
     return (

@@ -60,6 +60,8 @@ export const WeeklyCalendar = ({
     const isAbsenceDay = (date: Date): boolean => {
         const dateStr = formatDate(date);
         return absences.some(a => {
+            // Only check absences for the current doctor
+            if (a.doctorId !== doctorId) return false;
             return dateStr >= a.startDate && dateStr <= a.endDate;
         });
     };
@@ -297,7 +299,7 @@ export const WeeklyCalendar = ({
                                 } else if (past) {
                                     cellClass += 'bg-gray-200 cursor-not-allowed ';
                                 } else if (isAvailable) {
-                                    cellClass += 'bg-green-50 hover:bg-green-100 ';
+                                    cellClass += 'bg-green-200 hover:bg-green-300 border border-green-400 ';
                                 } else {
                                     cellClass += 'bg-gray-100 cursor-not-allowed ';
                                 }
@@ -349,7 +351,7 @@ export const WeeklyCalendar = ({
             {/* Legend */}
             <div className="p-4 bg-gray-50 border-t flex flex-wrap gap-4 text-sm">
                 <div className="flex items-center gap-1">
-                    <div className="w-4 h-4 bg-green-50 border"></div>
+                    <div className="w-4 h-4 bg-green-200 border border-green-400"></div>
                     <span>Dostępne</span>
                 </div>
                 <div className="flex items-center gap-1">

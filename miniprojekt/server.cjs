@@ -109,10 +109,9 @@ app.post('/register', async (req, res) => {
         return res.status(400).json({ message: 'Email and password required' });
     }
 
-    const db = getDb();
-
-    // Check if email exists
-    if (db.users.find(u => u.email === email)) {
+    // Use lowdb's in-memory database (same as all other operations)
+    const existingUser = router.db.get('users').find({ email: email }).value();
+    if (existingUser) {
         return res.status(400).json({ message: 'Email already exists' });
     }
 
@@ -129,8 +128,8 @@ app.post('/register', async (req, res) => {
         isBanned: false
     };
 
-    db.users.push(newUser);
-    saveDb(db);
+    // Add to lowdb's in-memory database
+    router.db.get('users').push(newUser).write();
 
     // Generate token
     const accessToken = generateToken(newUser);
@@ -154,8 +153,8 @@ app.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Email and password required' });
     }
 
-    const db = getDb();
-    const user = db.users.find(u => u.email === email);
+    // Use lowdb's in-memory database (same as registration)
+    const user = router.db.get('users').find({ email: email }).value();
 
     if (!user) {
         return res.status(401).json({ message: 'Cannot find user' });
@@ -189,13 +188,45 @@ app.post('/login', async (req, res) => {
 // ==================== PROTECTED ROUTES ====================
 
 // Protected: appointments (require login for write operations)
-app.post('/appointments', authenticate, (req, res, next) => {
-    req.body.patientId = req.user.id; // Ensure user can only create their own appointments
-    next();
+app.post('/appointments', authenticate, (req, res) => {
+    // Use json-server's in-memory database instead of reading/writing file
+    // This ensures the data is immediately available for queries
+    const newAppointment = {
+        ...req.body,
+        patientId: String(req.user.id) // Ensure user can only create their own appointments
+    };
+
+    // Add to json-server's in-memory database
+    router.db.get('appointments').push(newAppointment).write();
+
+    res.status(201).json(newAppointment);
 });
 
-app.patch('/appointments/:id', authenticate, (req, res, next) => {
-    next();
+// Protected: PATCH appointment (e.g., cancel)
+app.patch('/appointments/:id', authenticate, (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+
+    // Get the appointment - try both string and number ID (appointments use string IDs)
+    let appointment = router.db.get('appointments').find({ id: id }).value();
+    if (!appointment) {
+        // Fallback: try as number in case some appointments were created with numeric IDs
+        appointment = router.db.get('appointments').find({ id: parseInt(id) }).value();
+    }
+
+    if (!appointment) {
+        return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    // Update the appointment in json-server's database using the original appointment's ID type
+    router.db.get('appointments')
+        .find({ id: appointment.id })
+        .assign(updates)
+        .write();
+
+    // Return updated appointment
+    const updated = router.db.get('appointments').find({ id: appointment.id }).value();
+    res.json(updated);
 });
 
 app.delete('/appointments/:id', authenticate, requireRole('admin'), (req, res, next) => {
@@ -209,49 +240,127 @@ app.get('/users', optionalAuth, (req, res, next) => {
     next();
 });
 
-app.patch('/users/:id', authenticate, requireRole('admin'), (req, res, next) => {
-    next();
+app.patch('/users/:id', authenticate, requireRole('admin'), (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+
+    // Find the user (try both string and number ID)
+    let user = router.db.get('users').find({ id: id }).value();
+    if (!user) {
+        user = router.db.get('users').find({ id: parseInt(id) }).value();
+    }
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Update the user in json-server's database
+    router.db.get('users')
+        .find({ id: user.id })
+        .assign(updates)
+        .write();
+
+    // Return updated user
+    const updated = router.db.get('users').find({ id: user.id }).value();
+    res.json(updated);
+});
+
+// Admin can delete users
+app.delete('/users/:id', authenticate, requireRole('admin'), (req, res) => {
+    const { id } = req.params;
+
+    // Remove from json-server's in-memory database (try both string and number ID)
+    let removed = router.db.get('users').remove({ id: id }).write();
+    if (removed.length === 0) {
+        removed = router.db.get('users').remove({ id: parseInt(id) }).write();
+    }
+
+    res.status(200).json({ message: 'User deleted' });
+});
+
+// Admin can create new users (e.g., doctor accounts)
+app.post('/users', authenticate, requireRole('admin'), async (req, res) => {
+    const newUser = req.body;
+
+    // Hash password with bcrypt if provided
+    if (newUser.password) {
+        newUser.password = await bcrypt.hash(newUser.password, 10);
+    }
+
+    // Add to json-server's in-memory database
+    router.db.get('users').push(newUser).write();
+
+    res.status(201).json(newUser);
 });
 
 // Protected: doctors (admin only for write)
-app.post('/doctors', authenticate, requireRole('admin'), (req, res, next) => {
-    next();
+app.post('/doctors', authenticate, requireRole('admin'), (req, res) => {
+    const newDoctor = req.body;
+
+    // Add to json-server's in-memory database
+    router.db.get('doctors').push(newDoctor).write();
+
+    res.status(201).json(newDoctor);
 });
 
 app.put('/doctors/:id', authenticate, requireRole('admin', 'doctor'), (req, res, next) => {
     next();
 });
 
-app.delete('/doctors/:id', authenticate, requireRole('admin'), (req, res, next) => {
-    next();
+app.delete('/doctors/:id', authenticate, requireRole('admin'), (req, res) => {
+    const { id } = req.params;
+
+    // Remove from json-server's in-memory database
+    router.db.get('doctors').remove({ id: id }).write();
+
+    res.status(200).json({ message: 'Doctor deleted' });
 });
 
 // Protected: availabilities (doctor or admin)
-app.post('/availabilities', authenticate, requireRole('doctor', 'admin'), (req, res, next) => {
-    if (req.user.role === 'doctor') {
-        req.body.doctorId = String(req.user.id); // Doctors can only add for themselves
-    }
-    next();
+app.post('/availabilities', authenticate, requireRole('doctor', 'admin'), (req, res) => {
+    const newAvailability = req.body;
+    // Note: frontend sends doctorId based on the doctor profile being viewed
+
+    // Add to json-server's in-memory database
+    router.db.get('availabilities').push(newAvailability).write();
+
+    res.status(201).json(newAvailability);
 });
 
-app.put('/availabilities/:id', authenticate, requireRole('doctor', 'admin'), (req, res, next) => {
-    next();
+app.put('/availabilities/:id', authenticate, requireRole('doctor', 'admin'), (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+
+    router.db.get('availabilities')
+        .find({ id: id })
+        .assign(updates)
+        .write();
+
+    const updated = router.db.get('availabilities').find({ id: id }).value();
+    res.json(updated);
 });
 
-app.delete('/availabilities/:id', authenticate, requireRole('doctor', 'admin'), (req, res, next) => {
-    next();
+app.delete('/availabilities/:id', authenticate, requireRole('doctor', 'admin'), (req, res) => {
+    const { id } = req.params;
+    router.db.get('availabilities').remove({ id: id }).write();
+    res.status(200).json({ message: 'Availability deleted' });
 });
 
 // Protected: absences (doctor or admin)
-app.post('/absences', authenticate, requireRole('doctor', 'admin'), (req, res, next) => {
-    if (req.user.role === 'doctor') {
-        req.body.doctorId = String(req.user.id);
-    }
-    next();
+app.post('/absences', authenticate, requireRole('doctor', 'admin'), (req, res) => {
+    const newAbsence = req.body;
+    // Note: frontend sends doctorId based on the doctor profile being viewed
+
+    // Add to json-server's in-memory database
+    router.db.get('absences').push(newAbsence).write();
+
+    res.status(201).json(newAbsence);
 });
 
-app.delete('/absences/:id', authenticate, requireRole('doctor', 'admin'), (req, res, next) => {
-    next();
+app.delete('/absences/:id', authenticate, requireRole('doctor', 'admin'), (req, res) => {
+    const { id } = req.params;
+    router.db.get('absences').remove({ id: id }).write();
+    res.status(200).json({ message: 'Absence deleted' });
 });
 
 // ==================== JSON SERVER ROUTER ====================

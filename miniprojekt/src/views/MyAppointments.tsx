@@ -24,7 +24,7 @@ export const MyAppointments = () => {
 
     const loadData = async () => {
         const [allAppts, allDocs] = await Promise.all([
-            backend.getAppointmentsByPatient(user!.id),
+            backend.getAppointmentsByPatient(String(user!.id)),
             backend.getDoctors()
         ]);
         setHistory(allAppts);
@@ -63,9 +63,17 @@ export const MyAppointments = () => {
 
     const handleCancelAppointment = async () => {
         if (!selectedForCancel) return;
-        await backend.cancelAppointment(selectedForCancel.id, 'Odwołane przez pacjenta');
-        setSelectedForCancel(null);
-        await loadData();
+
+        try {
+            console.log('Cancelling appointment:', selectedForCancel.id);
+            await backend.cancelAppointment(selectedForCancel.id, 'Odwołane przez pacjenta');
+            console.log('Appointment cancelled successfully');
+            setSelectedForCancel(null);
+            await loadData();
+        } catch (error) {
+            console.error('Error cancelling appointment:', error);
+            alert(`Błąd podczas odwoływania wizyty: ${error}`);
+        }
     };
 
     if (!user) return <div className="p-4">Zaloguj się aby zobaczyć swoje wizyty</div>;
