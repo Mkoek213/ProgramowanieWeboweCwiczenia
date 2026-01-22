@@ -4,8 +4,8 @@ import { CONSULTATION_TYPE_LABELS } from '../models/types';
 
 interface BookingModalProps {
     doctor: Doctor;
-    selectedDate: string;      // "YYYY-MM-DD"
-    selectedTime: string;      // "HH:MM"
+    selectedDate: string;    
+    selectedTime: string;   
     existingAppointments: Appointment[];
     onBook: (appointment: Appointment) => Promise<void>;
     onClose: () => void;
@@ -19,7 +19,7 @@ export const BookingModal = ({
     onBook,
     onClose
 }: BookingModalProps) => {
-    const [duration, setDuration] = useState(1); // Number of 0.5h slots
+    const [duration, setDuration] = useState(1); 
     const [consultationType, setConsultationType] = useState<ConsultationType>('first_visit');
     const [patientName, setPatientName] = useState('');
     const [patientGender, setPatientGender] = useState<'male' | 'female' | 'other'>('male');
@@ -29,7 +29,6 @@ export const BookingModal = ({
     const [conflictError, setConflictError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Check for conflicts with selected duration
     const checkConflicts = (slots: number): string | null => {
         const [startHour, startMin] = selectedTime.split(':').map(Number);
         const startMins = startHour * 60 + startMin;
@@ -47,7 +46,6 @@ export const BookingModal = ({
             const apptStartMins = apptHour * 60 + apptMin;
             const apptEndMins = apptStartMins + ((appt.duration || 1) * 30);
 
-            // Check overlap
             if (startMins < apptEndMins && endMins > apptStartMins) {
                 return `Konflikt z istniejącą wizytą o ${apptTimePart}`;
             }
@@ -99,7 +97,7 @@ export const BookingModal = ({
         const appointment: Appointment = {
             id: Date.now().toString(),
             doctorId: doctor.id,
-            patientId: '', // Will be set by the parent component
+            patientId: '', 
             date: `${selectedDate} ${selectedTime}`,
             duration,
             status: 'pending',
@@ -130,24 +128,24 @@ export const BookingModal = ({
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold">Rezerwacja wizyty</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">
-                        ✕
+
                     </button>
                 </div>
 
-                {/* Doctor info */}
+                {}
                 <div className="bg-blue-50 p-3 rounded mb-4">
                     <p className="font-bold">{doctor.name}</p>
                     <p className="text-blue-600">{doctor.specialization}</p>
                     <p className="text-sm text-gray-600">Cena za 30 min: {doctor.price} PLN</p>
                 </div>
 
-                {/* Selected slot */}
+                {}
                 <div className="mb-4">
                     <p className="font-medium">Wybrany termin:</p>
                     <p className="text-lg">{selectedDate} o {selectedTime}</p>
                 </div>
 
-                {/* Duration */}
+                {}
                 <div className="mb-4">
                     <label className="block font-medium mb-2">Czas trwania wizyty:</label>
                     <select
@@ -165,7 +163,7 @@ export const BookingModal = ({
                     )}
                 </div>
 
-                {/* Consultation type */}
+                {}
                 <div className="mb-4">
                     <label className="block font-medium mb-2">Typ wizyty:</label>
                     <select
@@ -179,7 +177,7 @@ export const BookingModal = ({
                     </select>
                 </div>
 
-                {/* Patient details */}
+                {}
                 <div className="mb-4">
                     <label className="block font-medium mb-2">Dane pacjenta:</label>
                     <input
@@ -211,7 +209,7 @@ export const BookingModal = ({
                     </div>
                 </div>
 
-                {/* Notes */}
+                {}
                 <div className="mb-4">
                     <label className="block font-medium mb-2">Informacje dla lekarza:</label>
                     <textarea
@@ -222,7 +220,7 @@ export const BookingModal = ({
                     />
                 </div>
 
-                {/* Document upload */}
+                {}
                 <div className="mb-4">
                     <label className="block font-medium mb-2">Dokumenty (wyniki badań, skierowania):</label>
                     <input
@@ -248,7 +246,7 @@ export const BookingModal = ({
                     )}
                 </div>
 
-                {/* Summary */}
+                {}
                 <div className="bg-gray-100 p-3 rounded mb-4">
                     <div className="flex justify-between">
                         <span>Czas trwania:</span>
@@ -260,7 +258,7 @@ export const BookingModal = ({
                     </div>
                 </div>
 
-                {/* Actions */}
+                {}
                 <div className="flex gap-2">
                     <button
                         onClick={onClose}

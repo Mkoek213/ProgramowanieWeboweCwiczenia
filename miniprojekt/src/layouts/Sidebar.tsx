@@ -18,44 +18,44 @@ export const Sidebar = () => {
 
     return (
         <div className="w-64 h-screen bg-gray-800 text-white flex flex-col">
-            {/* Logo */}
+            {}
             <div className="p-4 text-2xl font-bold border-b border-gray-700 bg-gray-900">
                 <Link to="/" className="flex items-center gap-2">
-                    <span className="text-3xl">🏥</span>
+                    <span className="text-3xl"></span>
                     <span>MedApp</span>
                 </Link>
             </div>
 
-            {/* Navigation */}
+            {}
             <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                {/* Always visible */}
+                {}
                 <Link to="/" className={linkClass('/')}>
-                    🏠 Strona Główna
+                    Strona Główna
                 </Link>
                 <Link to="/doctors" className={linkClass('/doctors')}>
-                    👨‍⚕️ Lista Lekarzy
+                    Lista Lekarzy
                 </Link>
 
-                {/* Guest only - Login/Register */}
+                {}
                 {!isAuthenticated && (
                     <>
                         <div className="border-t border-gray-700 my-4"></div>
                         <Link to="/login" className={linkClass('/login')}>
-                            🔑 Logowanie
+                            Logowanie
                         </Link>
                         <Link to="/register" className={linkClass('/register')}>
-                            📝 Rejestracja
+                            Rejestracja
                         </Link>
                     </>
                 )}
 
-                {/* Patient menu */}
+                {}
                 {role === 'patient' && (
                     <>
                         <div className="border-t border-gray-700 my-4"></div>
                         <p className="text-xs text-gray-500 uppercase tracking-wider px-3">Pacjent</p>
                         <Link to="/my-appointments" className={linkClass('/my-appointments')}>
-                            📅 Moje Wizyty
+                            Moje Wizyty
                             {cart.length > 0 && (
                                 <span className="ml-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
                                     {cart.length}
@@ -65,30 +65,30 @@ export const Sidebar = () => {
                     </>
                 )}
 
-                {/* Doctor menu */}
+                {}
                 {role === 'doctor' && (
                     <>
                         <div className="border-t border-gray-700 my-4"></div>
                         <p className="text-xs text-gray-500 uppercase tracking-wider px-3">Lekarz</p>
                         <Link to="/my-schedule" className={linkClass('/my-schedule')}>
-                            📋 Mój Harmonogram
+                            Mój Harmonogram
                         </Link>
                     </>
                 )}
 
-                {/* Admin menu */}
+                {}
                 {role === 'admin' && (
                     <>
                         <div className="border-t border-gray-700 my-4"></div>
                         <p className="text-xs text-gray-500 uppercase tracking-wider px-3">Administrator</p>
                         <Link to="/admin" className={linkClass('/admin')}>
-                            ⚙️ Panel Admina
+                            Panel Admina
                         </Link>
                     </>
                 )}
             </nav>
 
-            {/* User info footer */}
+            {}
             <div className="p-4 border-t border-gray-700 bg-gray-900">
                 {isAuthenticated && user ? (
                     <div>
@@ -105,7 +105,7 @@ export const Sidebar = () => {
                             onClick={logout}
                             className="w-full mt-2 py-2 px-4 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition-colors"
                         >
-                            🚪 Wyloguj
+                            Wyloguj
                         </button>
                     </div>
                 ) : (

@@ -17,7 +17,6 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasReviewed, setHasReviewed] = useState(false);
 
-    // Check if user has attended this doctor (completed appointment)
     useEffect(() => {
         const checkEligibility = async () => {
             if (!user || user.role !== 'patient') {
@@ -26,7 +25,7 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
                 return;
             }
 
-            // Check if banned
+
             if (user.isBanned) {
                 setCanReview(false);
                 setIsLoading(false);
@@ -34,14 +33,14 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
             }
 
             try {
-                // Get user's appointments with this doctor
+
                 const appointments = await backend.getAppointmentsByPatient(String(user.id));
                 const attendedThisDoctor = appointments.some(
                     (a: Appointment) => a.doctorId === doctorId &&
-                        a.status === 'completed'  // Only completed appointments count as "attended"
+                        a.status === 'completed'  
                 );
 
-                // Check if already reviewed this doctor
+
                 const doctor = await backend.getDoctorById(doctorId);
                 const alreadyReviewed = doctor?.reviews?.some(
                     r => r.author === (user.name || user.email)
@@ -100,7 +99,7 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
     if (hasReviewed) {
         return (
             <div className="mt-4 border p-4 rounded bg-green-50 text-center">
-                <p className="text-green-600">✓ Już dodałeś opinię dla tego lekarza.</p>
+                <p className="text-green-600">Już dodałeś opinię dla tego lekarza.</p>
             </div>
         );
     }
@@ -119,7 +118,7 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
         <div className="mt-4 border p-4 rounded bg-gray-50">
             <h4 className="font-bold mb-2">⭐ Dodaj opinię</h4>
 
-            {/* Star rating */}
+            {}
             <div className="flex gap-2 my-3">
                 {[1, 2, 3, 4, 5].map(r => (
                     <button
@@ -128,7 +127,7 @@ export const AddReview: React.FC<AddReviewProps> = ({ doctorId, onAdded }) => {
                         className={`text-3xl transition ${rating >= r ? 'text-yellow-400' : 'text-gray-300'
                             } hover:scale-110`}
                     >
-                        ★
+
                     </button>
                 ))}
                 <span className="text-gray-500 ml-2 self-center">{rating}/5</span>

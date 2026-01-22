@@ -68,6 +68,14 @@
       "name": "bb",
       "role": "patient",
       "isBanned": false
+    },
+    {
+      "id": 1769075231969,
+      "email": "tes@tes",
+      "password": "$2b$10$hBfxwl.5gJu3/ZFUBHU4LufXd7vgjuK2FMqSajJScwVxMK4bUuxsm",
+      "name": "test",
+      "role": "patient",
+      "isBanned": false
     }
   ],
   "doctors": [
@@ -148,12 +156,14 @@
       "patientId": "3",
       "date": "2026-01-21 09:00",
       "duration": 1,
-      "status": "booked",
+      "status": "cancelled",
       "consultationType": "first_visit",
       "patientName": "mi",
       "patientGender": "male",
       "patientAge": 21,
-      "notes": "aaa"
+      "notes": "aaa",
+      "cancelledAt": "2026-01-22T09:46:57.419Z",
+      "cancelReason": "Odwołane przez pacjenta"
     },
     {
       "id": "1768947996298",
@@ -365,6 +375,41 @@
           "to": "12:00"
         }
       ]
+    },
+    {
+      "id": "1769075167103",
+      "doctorId": "1",
+      "type": "cyclic",
+      "startDate": "2026-01-22",
+      "endDate": "2026-01-29",
+      "dayMask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      "timeRanges": [
+        {
+          "from": "08:00",
+          "to": "12:00"
+        },
+        {
+          "from": "13:00",
+          "to": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "1769075181869",
+      "doctorId": "1",
+      "type": "one_time",
+      "date": "2026-01-24",
+      "slots": [
+        "09:00"
+      ]
     }
   ],
   "absences": [
@@ -383,25 +428,11 @@
       "reason": "aa"
     },
     {
-      "id": "1768947453867",
-      "doctorId": "1",
-      "startDate": "2026-01-21",
-      "endDate": "2026-01-23",
-      "reason": "aa"
-    },
-    {
       "id": "1768947968523",
       "doctorId": "1768947912866",
       "startDate": "2026-01-20",
       "endDate": "2026-01-23",
       "reason": "aa"
-    },
-    {
-      "id": "1769072913891",
-      "doctorId": "1",
-      "startDate": "2026-01-22",
-      "endDate": "2026-02-22",
-      "reason": "bb"
     }
   ]
 }

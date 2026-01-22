@@ -4,7 +4,7 @@ import { useAuth } from './AuthContext';
 import type { Appointment, Availability, Absence } from '../models/types';
 
 interface NotificationContextProps {
-    // Schedule data that updates in real-time
+
     scheduleUpdates: ScheduleUpdate[];
     hasNewUpdates: boolean;
     clearUpdates: () => void;
@@ -22,7 +22,7 @@ interface ScheduleUpdate {
 
 const NotificationContext = createContext<NotificationContextProps | undefined>(undefined);
 
-const POLL_INTERVAL = 30000; // 30 seconds
+const POLL_INTERVAL = 30000; 
 
 export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { backend } = useBackend();
@@ -32,7 +32,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     const [hasNewUpdates, setHasNewUpdates] = useState(false);
     const [lastUpdateTime, setLastUpdateTime] = useState<Date | null>(null);
 
-    // Store previous state for comparison
+
     const [prevAppointments, setPrevAppointments] = useState<Appointment[]>([]);
     const [prevAvailabilities, setPrevAvailabilities] = useState<Availability[]>([]);
     const [prevAbsences, setPrevAbsences] = useState<Absence[]>([]);
@@ -49,7 +49,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
 
             const newUpdates: ScheduleUpdate[] = [];
 
-            // Check for new absences (doctors becoming unavailable)
+        
             for (const absence of absences) {
                 const wasPresent = prevAbsences.some(a => a.id === absence.id);
                 if (!wasPresent) {
@@ -63,7 +63,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
                 }
             }
 
-            // Check for cancelled appointments (that were previously booked)
+          
             for (const appt of appointments) {
                 const prevAppt = prevAppointments.find(a => a.id === appt.id);
                 if (prevAppt && prevAppt.status !== 'cancelled' && appt.status === 'cancelled') {
@@ -79,7 +79,6 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
                 }
             }
 
-            // Check for new availability slots
             for (const av of availabilities) {
                 const wasPresent = prevAvailabilities.some(a => a.id === av.id);
                 if (!wasPresent) {
@@ -94,11 +93,11 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
             }
 
             if (newUpdates.length > 0) {
-                setScheduleUpdates(prev => [...newUpdates, ...prev].slice(0, 20)); // Keep last 20
+                setScheduleUpdates(prev => [...newUpdates, ...prev].slice(0, 20)); 
                 setHasNewUpdates(true);
             }
 
-            // Update previous state
+         
             setPrevAppointments(appointments);
             setPrevAvailabilities(availabilities);
             setPrevAbsences(absences);
@@ -109,14 +108,14 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
         }
     }, [backend, isAuthenticated, user, prevAppointments, prevAvailabilities, prevAbsences]);
 
-    // Initial load
+ 
     useEffect(() => {
         if (isAuthenticated && user?.role === 'patient') {
             checkForUpdates();
         }
     }, [isAuthenticated, user?.id]);
 
-    // Polling
+ 
     useEffect(() => {
         if (!isAuthenticated || user?.role !== 'patient') return;
 

@@ -2,11 +2,11 @@
 export interface User {
     id: string;
     email: string;
-    password?: string;  // For authentication (simple hash)
+    password?: string;  
     role: 'guest' | 'patient' | 'doctor' | 'admin';
     name?: string;
     isBanned?: boolean;
-    attendedDoctors?: string[];  // IDs of doctors the patient has visited (for review restriction)
+    attendedDoctors?: string[]; 
 }
 
 // ==================== DOCTOR ====================
@@ -18,7 +18,7 @@ export interface Doctor {
     description: string;
     imageUrl?: string;
     reviews: Review[];
-    schedule: string[]; // Legacy: np. "2023-10-10 10:00"
+    schedule: string[]; 
 }
 
 export interface Review {
@@ -31,12 +31,12 @@ export interface Review {
 
 // ==================== CONSULTATION TYPES ====================
 export type ConsultationType =
-    | 'first_visit'      // Pierwsza wizyta
-    | 'follow_up'        // Wizyta kontrolna
-    | 'chronic'          // Choroba przewlekła
-    | 'prescription'     // Recepta
-    | 'consultation'     // Konsultacja
-    | 'other';           // Inne
+    | 'first_visit'   
+    | 'follow_up'        
+    | 'chronic'         
+    | 'prescription'    
+    | 'consultation'    
+    | 'other';          
 
 export const CONSULTATION_TYPE_LABELS: Record<ConsultationType, string> = {
     first_visit: 'Pierwsza wizyta',
@@ -58,11 +58,11 @@ export const CONSULTATION_TYPE_COLORS: Record<ConsultationType, string> = {
 
 // ==================== TIME SLOT ====================
 export interface TimeSlot {
-    startTime: string;  // "HH:MM" format
-    endTime: string;    // "HH:MM" format (startTime + 30 min)
-    date: string;       // "YYYY-MM-DD" format
+    startTime: string; 
+    endTime: string;    
+    date: string;      
     isAvailable: boolean;
-    appointmentId?: string; // If booked
+    appointmentId?: string; 
 }
 
 // ==================== AVAILABILITY ====================
@@ -72,29 +72,29 @@ export interface Availability {
     type: 'cyclic' | 'one_time';
 
     // For cyclic availability
-    startDate?: string;     // "YYYY-MM-DD"
-    endDate?: string;       // "YYYY-MM-DD"
-    dayMask?: boolean[];    // [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    startDate?: string;    
+    endDate?: string;      
+    dayMask?: boolean[];    
     timeRanges?: TimeRange[];
 
     // For one-time availability
-    date?: string;          // "YYYY-MM-DD"
-    slots?: string[];       // ["HH:MM", "HH:MM", ...]
+    date?: string;        
+    slots?: string[];    
 }
 
 export interface TimeRange {
-    from: string;  // "HH:MM"
-    to: string;    // "HH:MM"
+    from: string; 
+    to: string;   
 }
 
 // ==================== ABSENCE ====================
 export interface Absence {
     id: string;
     doctorId: string;
-    startDate: string;      // "YYYY-MM-DD"
-    endDate: string;        // "YYYY-MM-DD"
+    startDate: string;    
+    endDate: string;     
     reason?: string;
-    affectedAppointments?: string[]; // IDs of appointments that were cancelled
+    affectedAppointments?: string[]; 
 }
 
 // ==================== APPOINTMENT (ENHANCED) ====================
@@ -102,8 +102,8 @@ export interface Appointment {
     id: string;
     doctorId: string;
     patientId: string;
-    date: string;           // "YYYY-MM-DD HH:MM"
-    duration: number;       // Number of 0.5h slots (default: 1)
+    date: string;  
+    duration: number;      
     status: 'pending' | 'booked' | 'completed' | 'cancelled';
 
     // Consultation details
@@ -126,10 +126,9 @@ export interface Appointment {
 export interface DocumentAttachment {
     id: string;
     name: string;
-    type: string;       // MIME type
-    size: number;       // bytes
+    type: string;     
+    size: number;      
     uploadedAt: string;
-    // In real app, would have URL or base64 data
 }
 
 // ==================== HELPER FUNCTIONS ====================

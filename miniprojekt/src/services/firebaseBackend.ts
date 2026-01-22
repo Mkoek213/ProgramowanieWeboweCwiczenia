@@ -1,10 +1,6 @@
 import type { IDataBackend } from './api';
 import type { Doctor, Appointment, Review, User, Availability, Absence } from '../models/types';
 
-// TODO: Import firebase config here
-// import { initializeApp } from "firebase/app";
-// ...
-
 export class FirebaseBackend implements IDataBackend {
 
     constructor() {

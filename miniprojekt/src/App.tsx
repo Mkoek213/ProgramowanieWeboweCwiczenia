@@ -25,7 +25,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="text-center mb-12">
         <div className="inline-block mb-4">
-          <span className="text-6xl">🏥</span>
+          <span className="text-6xl"></span>
         </div>
         <h1 className="text-5xl font-bold mb-4 gradient-text">
           MedApp
@@ -40,17 +40,17 @@ const Home = () => {
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="card text-center hover-lift">
-              <div className="text-4xl mb-3">👨‍⚕️</div>
+              <div className="text-4xl mb-3"></div>
               <h3 className="font-bold text-lg mb-2">Znajdź lekarza</h3>
               <p className="text-gray-500 text-sm">Przeglądaj specjalistów z różnych dziedzin</p>
             </div>
             <div className="card text-center hover-lift">
-              <div className="text-4xl mb-3">📅</div>
+              <div className="text-4xl mb-3"></div>
               <h3 className="font-bold text-lg mb-2">Zarezerwuj wizytę</h3>
               <p className="text-gray-500 text-sm">Wybierz dogodny termin online</p>
             </div>
             <div className="card text-center hover-lift">
-              <div className="text-4xl mb-3">⭐</div>
+              <div className="text-4xl mb-3"></div>
               <h3 className="font-bold text-lg mb-2">Oceń wizytę</h3>
               <p className="text-gray-500 text-sm">Podziel się opinią o lekarzu</p>
             </div>
@@ -64,10 +64,10 @@ const Home = () => {
             </p>
             <div className="flex gap-4 justify-center">
               <Link to="/login" className="btn-primary text-lg px-8 py-3">
-                🔑 Zaloguj się
+                 Zaloguj się
               </Link>
               <Link to="/register" className="btn-success text-lg px-8 py-3">
-                📝 Zarejestruj się
+                 Zarejestruj się
               </Link>
             </div>
           </div>
@@ -92,7 +92,7 @@ const Home = () => {
               <Link to="/doctors" className="card hover-lift group">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                    👨‍⚕️
+                    
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">Znajdź lekarza</h3>
@@ -103,7 +103,7 @@ const Home = () => {
               <Link to="/my-appointments" className="card hover-lift group">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                    📅
+                    
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">Moje wizyty</h3>
@@ -119,7 +119,7 @@ const Home = () => {
               <Link to="/my-schedule" className="card hover-lift group bg-gradient-to-br from-blue-50 to-blue-100">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg group-hover:scale-110 transition-transform">
-                    📋
+                    
                   </div>
                   <div>
                     <h3 className="font-bold text-lg">Mój harmonogram</h3>
@@ -130,9 +130,9 @@ const Home = () => {
               <div className="card">
                 <h4 className="font-semibold mb-3">Szybkie akcje:</h4>
                 <ul className="space-y-2 text-gray-600">
-                  <li>✓ Dodaj dostępność cykliczną</li>
-                  <li>✓ Zgłoś nieobecność</li>
-                  <li>✓ Odpowiedz na opinie</li>
+                      <li>Dodaj dostępność cykliczną</li>
+                      <li>Zgłoś nieobecność</li>
+                      <li>Odpowiedz na opinie</li>
                 </ul>
               </div>
             </div>
@@ -142,21 +142,21 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Link to="/admin" className="card hover-lift bg-gradient-to-br from-purple-50 to-purple-100 group">
                 <div className="text-center">
-                  <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">👥</div>
+                      <div className="text-4xl mb-2 group-hover:scale-110 transition-transform"></div>
                   <h3 className="font-bold">Użytkownicy</h3>
                   <p className="text-sm text-gray-600">Zarządzaj kontami</p>
                 </div>
               </Link>
               <Link to="/admin" className="card hover-lift bg-gradient-to-br from-blue-50 to-blue-100 group">
                 <div className="text-center">
-                  <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">👨‍⚕️</div>
+                      <div className="text-4xl mb-2 group-hover:scale-110 transition-transform"></div>
                   <h3 className="font-bold">Lekarze</h3>
                   <p className="text-sm text-gray-600">Dodaj / usuń lekarzy</p>
                 </div>
               </Link>
               <Link to="/admin" className="card hover-lift bg-gradient-to-br from-gray-50 to-gray-100 group">
                 <div className="text-center">
-                  <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">⚙️</div>
+                      <div className="text-4xl mb-2 group-hover:scale-110 transition-transform"></div>
                   <h3 className="font-bold">Ustawienia</h3>
                   <p className="text-sm text-gray-600">Konfiguracja systemu</p>
                 </div>

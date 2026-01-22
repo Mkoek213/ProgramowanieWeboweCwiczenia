@@ -18,13 +18,11 @@ export const AvailabilityManager = ({
     const [showForm, setShowForm] = useState(false);
     const [formType, setFormType] = useState<'cyclic' | 'one_time'>('cyclic');
 
-    // Cyclic form state
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [dayMask, setDayMask] = useState<boolean[]>([true, true, true, true, true, false, false]);
     const [timeRanges, setTimeRanges] = useState<TimeRange[]>([{ from: '08:00', to: '12:00' }]);
 
-    // One-time form state
     const [oneTimeDate, setOneTimeDate] = useState('');
     const [oneTimeSlots, setOneTimeSlots] = useState<string[]>([]);
     const [newSlot, setNewSlot] = useState('09:00');
@@ -112,10 +110,10 @@ export const AvailabilityManager = ({
                 </button>
             </div>
 
-            {/* Form */}
+            {} 
             {showForm && (
                 <div className="border rounded p-4 mb-4 bg-gray-50">
-                    {/* Type selector */}
+                    {}
                     <div className="mb-4">
                         <label className="block font-medium mb-2">Typ dostępności:</label>
                         <div className="flex gap-4">
@@ -142,7 +140,7 @@ export const AvailabilityManager = ({
 
                     {formType === 'cyclic' ? (
                         <>
-                            {/* Date range */}
+                            {}
                             <div className="grid grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label className="block font-medium mb-1">Od daty:</label>
@@ -164,7 +162,7 @@ export const AvailabilityManager = ({
                                 </div>
                             </div>
 
-                            {/* Day mask */}
+                            {}
                             <div className="mb-4">
                                 <label className="block font-medium mb-2">Dni tygodnia:</label>
                                 <div className="flex flex-wrap gap-2">
@@ -186,7 +184,7 @@ export const AvailabilityManager = ({
                                 </div>
                             </div>
 
-                            {/* Time ranges */}
+                            {}
                             <div className="mb-4">
                                 <label className="block font-medium mb-2">Godziny konsultacji:</label>
                                 {timeRanges.map((range, i) => (
@@ -209,7 +207,7 @@ export const AvailabilityManager = ({
                                                 onClick={() => removeTimeRange(i)}
                                                 className="text-red-500 hover:text-red-700"
                                             >
-                                                ✕
+                                                
                                             </button>
                                         )}
                                     </div>
@@ -224,7 +222,7 @@ export const AvailabilityManager = ({
                         </>
                     ) : (
                         <>
-                            {/* One-time date */}
+                            {}
                             <div className="mb-4">
                                 <label className="block font-medium mb-1">Data:</label>
                                 <input
@@ -235,7 +233,7 @@ export const AvailabilityManager = ({
                                 />
                             </div>
 
-                            {/* Slots */}
+                            {}
                             <div className="mb-4">
                                 <label className="block font-medium mb-2">Sloty czasowe:</label>
                                 <div className="flex gap-2 mb-2">
@@ -264,7 +262,7 @@ export const AvailabilityManager = ({
                                                 onClick={() => removeOneTimeSlot(slot)}
                                                 className="text-red-500 hover:text-red-700"
                                             >
-                                                ✕
+
                                             </button>
                                         </span>
                                     ))}
@@ -282,7 +280,7 @@ export const AvailabilityManager = ({
                 </div>
             )}
 
-            {/* List of existing availabilities */}
+            {}
             <div className="space-y-2">
                 {myAvailabilities.length === 0 ? (
                     <p className="text-gray-500">Brak zdefiniowanej dostępności</p>

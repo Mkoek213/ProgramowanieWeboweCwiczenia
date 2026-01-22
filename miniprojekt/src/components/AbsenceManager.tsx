@@ -23,7 +23,6 @@ export const AbsenceManager = ({
     const [conflictingAppts, setConflictingAppts] = useState<Appointment[]>([]);
     const [showConflictWarning, setShowConflictWarning] = useState(false);
 
-    // Find conflicting appointments for a date range
     const findConflicts = (start: string, end: string): Appointment[] => {
         return appointments.filter(appt => {
             if (appt.doctorId !== doctorId) return false;
@@ -97,7 +96,6 @@ export const AbsenceManager = ({
                 </button>
             </div>
 
-            {/* Form */}
             {showForm && !showConflictWarning && (
                 <div className="border rounded p-4 mb-4 bg-red-50">
                     <div className="grid grid-cols-2 gap-4 mb-4">
@@ -141,12 +139,12 @@ export const AbsenceManager = ({
                 </div>
             )}
 
-            {/* Conflict warning modal */}
+            {}
             {showConflictWarning && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 max-w-lg w-full mx-4">
                         <h3 className="text-xl font-bold text-red-600 mb-4">
-                            ⚠️ Wykryto konflikty!
+                            Wykryto konflikty!
                         </h3>
                         <p className="mb-4">
                             W okresie {startDate} - {endDate} masz {conflictingAppts.length} zarezerwowanych wizyt:
@@ -179,7 +177,7 @@ export const AbsenceManager = ({
                 </div>
             )}
 
-            {/* List of existing absences */}
+            {}
             <div className="space-y-2">
                 {myAbsences.length === 0 ? (
                     <p className="text-gray-500">Brak zdefiniowanych nieobecności</p>

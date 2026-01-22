@@ -17,10 +17,10 @@ export const MySchedule = () => {
     const [activeTab, setActiveTab] = useState<'calendar' | 'availability' | 'absences'>('calendar');
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
 
-    // Get doctor ID from user
+
     const getDoctorId = () => {
         if (!user) return '';
-        // Mapping user to doctor - in real app would be more robust
+
         return user.email === 'jan@lekarz.pl' ? '1' : user.id;
     };
 
@@ -46,7 +46,7 @@ export const MySchedule = () => {
         refreshData();
     }, [user, backend]);
 
-    // Availability handlers
+
     const handleAddAvailability = async (av: Availability) => {
         await backend.addAvailability(av);
         await refreshData();
@@ -57,9 +57,9 @@ export const MySchedule = () => {
         await refreshData();
     };
 
-    // Absence handlers
+
     const handleAddAbsence = async (absence: Absence, cancelAppointments: string[]) => {
-        // Cancel affected appointments first
+
         for (const apptId of cancelAppointments) {
             await backend.cancelAppointment(apptId, 'Nieobecność lekarza');
         }
@@ -72,12 +72,12 @@ export const MySchedule = () => {
         await refreshData();
     };
 
-    // Handle appointment click in calendar
+
     const handleAppointmentClick = (appt: Appointment) => {
         setSelectedAppointment(appt);
     };
 
-    // Cancel appointment from detail modal
+
     const handleCancelAppointment = async (apptId: string) => {
         await backend.cancelAppointment(apptId, 'Odwołane przez lekarza');
         setSelectedAppointment(null);
@@ -99,29 +99,29 @@ export const MySchedule = () => {
                 </div>
             )}
 
-            {/* Tabs */}
+            {}
             <div className="flex gap-2 mb-4">
                 <button
                     onClick={() => setActiveTab('calendar')}
                     className={`px-4 py-2 rounded ${activeTab === 'calendar' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
                 >
-                    📅 Kalendarz
+                    Kalendarz
                 </button>
                 <button
                     onClick={() => setActiveTab('availability')}
                     className={`px-4 py-2 rounded ${activeTab === 'availability' ? 'bg-green-500 text-white' : 'bg-gray-200'}`}
                 >
-                    ⏰ Dostępność
+                     Dostępność
                 </button>
                 <button
                     onClick={() => setActiveTab('absences')}
                     className={`px-4 py-2 rounded ${activeTab === 'absences' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
                 >
-                    🚫 Nieobecności
+                    Nieobecności
                 </button>
             </div>
 
-            {/* Tab content */}
+            {}
             {activeTab === 'calendar' && myDoctorProfile && (
                 <WeeklyCalendar
                     doctorId={myDoctorProfile.id}
@@ -151,7 +151,7 @@ export const MySchedule = () => {
                 />
             )}
 
-            {/* Appointment detail modal */}
+            {}
             {selectedAppointment && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
@@ -180,7 +180,7 @@ export const MySchedule = () => {
                                     <strong>Dokumenty:</strong>
                                     <ul className="text-sm text-gray-600">
                                         {selectedAppointment.documents.map(doc => (
-                                            <li key={doc.id}>📎 {doc.name}</li>
+                                            <li key={doc.id}>{doc.name}</li>
                                         ))}
                                     </ul>
                                 </div>

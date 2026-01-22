@@ -83,8 +83,8 @@ export const MyAppointments = () => {
 
     return (
         <div className="p-4">
-            {/* Cart Section */}
-            <h2 className="text-2xl font-bold mb-4">🛒 Koszyk</h2>
+            {}
+            <h2 className="text-2xl font-bold mb-4">Koszyk</h2>
             {cart.length === 0 ? (
                 <div className="bg-gray-100 p-4 rounded mb-8 text-center text-gray-500">
                     Koszyk jest pusty
@@ -153,8 +153,8 @@ export const MyAppointments = () => {
                 </div>
             )}
 
-            {/* Upcoming Appointments */}
-            <h2 className="text-2xl font-bold mb-4">📅 Nadchodzące wizyty</h2>
+            {}
+            <h2 className="text-2xl font-bold mb-4">Nadchodzące wizyty</h2>
             {pendingAppointments.length === 0 ? (
                 <div className="bg-gray-100 p-4 rounded mb-8 text-center text-gray-500">
                     Brak nadchodzących wizyt
@@ -189,8 +189,8 @@ export const MyAppointments = () => {
                 </div>
             )}
 
-            {/* Past Appointments */}
-            <h2 className="text-2xl font-bold mb-4">📋 Historia wizyt</h2>
+            {}
+            <h2 className="text-2xl font-bold mb-4">Historia wizyt</h2>
             {pastAppointments.length === 0 ? (
                 <div className="bg-gray-100 p-4 rounded text-center text-gray-500">
                     Brak historii wizyt
@@ -213,7 +213,7 @@ export const MyAppointments = () => {
                 </div>
             )}
 
-            {/* Payment Modal */}
+            {}
             {showPaymentModal && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -222,7 +222,7 @@ export const MyAppointments = () => {
                     <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4" onClick={e => e.stopPropagation()}>
                         {!paymentComplete ? (
                             <>
-                                <h3 className="text-xl font-bold mb-4">💳 Symulacja płatności</h3>
+                                <h3 className="text-xl font-bold mb-4">Symulacja płatności</h3>
                                 <div className="bg-gray-100 p-4 rounded mb-4">
                                     <p className="text-lg">Kwota do zapłaty:</p>
                                     <p className="text-3xl font-bold text-green-600">{calculateTotal()} PLN</p>
@@ -250,7 +250,7 @@ export const MyAppointments = () => {
                                 className="text-center py-8 cursor-pointer"
                                 onClick={() => { setShowPaymentModal(false); setPaymentComplete(false); }}
                             >
-                                <div className="text-6xl mb-4">✅</div>
+                                <div className="text-6xl mb-4"></div>
                                 <h3 className="text-xl font-bold text-green-600">Płatność zakończona!</h3>
                                 <p className="text-gray-600 mb-4">Twoje wizyty zostały potwierdzone.</p>
                                 <button
@@ -265,11 +265,11 @@ export const MyAppointments = () => {
                 </div>
             )}
 
-            {/* Cancel Confirmation Modal */}
+            {}
             {selectedForCancel && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                        <h3 className="text-xl font-bold mb-4">⚠️ Potwierdź odwołanie</h3>
+                        <h3 className="text-xl font-bold mb-4">Potwierdź odwołanie</h3>
                         <p className="mb-4">
                             Czy na pewno chcesz odwołać wizytę u <strong>{getDoctorName(selectedForCancel.doctorId)}</strong> w dniu <strong>{selectedForCancel.date}</strong>?
                         </p>

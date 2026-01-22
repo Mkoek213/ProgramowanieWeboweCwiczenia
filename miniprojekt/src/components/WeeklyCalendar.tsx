@@ -35,10 +35,8 @@ export const WeeklyCalendar = ({
     const [scrollOffset, setScrollOffset] = useState(0);
     const [hoveredAppointment, setHoveredAppointment] = useState<Appointment | null>(null);
 
-    // Get dates for current week
     const weekDates = useMemo(() => getWeekDates(currentWeekStart), [currentWeekStart]);
 
-    // Generate time slots for display (0.5h each)
     const timeSlots = useMemo(() => {
         const slots: string[] = [];
         for (let hour = startHour; hour < endHour; hour++) {
@@ -48,7 +46,6 @@ export const WeeklyCalendar = ({
         return slots;
     }, [startHour, endHour]);
 
-    // Visible time slots based on scroll
     const visibleTimeSlots = useMemo(() => {
         const slotsPerHour = 2;
         const startIndex = scrollOffset * slotsPerHour;
@@ -56,21 +53,18 @@ export const WeeklyCalendar = ({
         return timeSlots.slice(startIndex, endIndex);
     }, [timeSlots, scrollOffset, visibleHours]);
 
-    // Check if a date is an absence day
     const isAbsenceDay = (date: Date): boolean => {
         const dateStr = formatDate(date);
         return absences.some(a => {
-            // Only check absences for the current doctor
             if (a.doctorId !== doctorId) return false;
             return dateStr >= a.startDate && dateStr <= a.endDate;
         });
     };
 
-    // Check if a slot is available based on availability rules
     const isSlotAvailable = (date: Date, time: string): boolean => {
         const dateStr = formatDate(date);
         const dayOfWeek = date.getDay();
-        const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Mon=0, Sun=6
+        const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 
         for (const av of availabilities) {
             if (av.doctorId !== doctorId) continue;
@@ -94,7 +88,6 @@ export const WeeklyCalendar = ({
         return false;
     };
 
-    // Get appointment for a specific slot
     const getAppointmentForSlot = (date: Date, time: string): Appointment | undefined => {
         const dateStr = formatDate(date);
         const slotDateTime = `${dateStr} ${time}`;
@@ -102,15 +95,15 @@ export const WeeklyCalendar = ({
         return appointments.find(a => {
             if (a.status === 'cancelled') return false;
             const apptDateTime = a.date;
-            // Check if this slot falls within the appointment duration
+
             const apptTime = a.date.split(' ')[1] || '';
             const apptDate = a.date.split(' ')[0] || '';
             if (apptDate !== dateStr) return false;
 
-            // Simple match for now
+
             if (apptTime === time) return true;
 
-            // Check duration (multiple slots)
+
             if (a.duration && a.duration > 1) {
                 const apptHour = parseInt(apptTime.split(':')[0]);
                 const apptMin = parseInt(apptTime.split(':')[1]);
@@ -128,7 +121,6 @@ export const WeeklyCalendar = ({
         });
     };
 
-    // Check if date/time is in the past
     const isPast = (date: Date, time: string): boolean => {
         const now = new Date();
         const slotDate = new Date(date);
@@ -137,13 +129,11 @@ export const WeeklyCalendar = ({
         return slotDate < now;
     };
 
-    // Check if date is today
     const isToday = (date: Date): boolean => {
         const today = new Date();
         return formatDate(date) === formatDate(today);
     };
 
-    // Get reservation count for a day
     const getReservationCount = (date: Date): number => {
         const dateStr = formatDate(date);
         return appointments.filter(a =>
@@ -151,7 +141,6 @@ export const WeeklyCalendar = ({
         ).length;
     };
 
-    // Navigate weeks
     const goToPreviousWeek = () => {
         const newDate = new Date(currentWeekStart);
         newDate.setDate(newDate.getDate() - 7);
@@ -168,7 +157,6 @@ export const WeeklyCalendar = ({
         setCurrentWeekStart(new Date());
     };
 
-    // Scroll handlers
     const scrollUp = () => {
         if (scrollOffset > 0) setScrollOffset(scrollOffset - 1);
     };
@@ -178,7 +166,6 @@ export const WeeklyCalendar = ({
         if (scrollOffset < maxOffset) setScrollOffset(scrollOffset + 1);
     };
 
-    // Current time marker position
     const getCurrentTimePosition = (): number | null => {
         const now = new Date();
         const hours = now.getHours();
@@ -197,7 +184,7 @@ export const WeeklyCalendar = ({
 
     return (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            {/* Header with navigation */}
+            {}
             <div className="flex items-center justify-between p-4 bg-gray-100 border-b">
                 <div className="flex gap-2">
                     <button
@@ -224,7 +211,7 @@ export const WeeklyCalendar = ({
                 </div>
             </div>
 
-            {/* Scroll controls */}
+            {}
             <div className="flex justify-end p-2 bg-gray-50 border-b">
                 <button onClick={scrollUp} className="px-2 py-1 text-sm bg-white border rounded mr-2 disabled:opacity-50" disabled={scrollOffset === 0}>
                     ↑ Wcześniej
@@ -234,9 +221,9 @@ export const WeeklyCalendar = ({
                 </button>
             </div>
 
-            {/* Calendar grid */}
+            {}
             <div className="relative">
-                {/* Current time marker */}
+                {}
                 {currentTimePosition !== null && (
                     <div
                         className="absolute left-0 right-0 border-t-2 border-red-500 z-20 pointer-events-none"
@@ -246,7 +233,7 @@ export const WeeklyCalendar = ({
                     </div>
                 )}
 
-                {/* Day headers */}
+                {}
                 <div className="grid grid-cols-8 border-b">
                     <div className="p-2 text-center font-bold bg-gray-50 border-r">Godzina</div>
                     {weekDates.map((date, i) => {
@@ -269,16 +256,16 @@ export const WeeklyCalendar = ({
                     })}
                 </div>
 
-                {/* Time slots grid */}
+                {}
                 <div className="max-h-96 overflow-hidden">
                     {visibleTimeSlots.map((time, timeIndex) => (
                         <div key={time} className="grid grid-cols-8 border-b last:border-b-0">
-                            {/* Time label */}
+                            {}
                             <div className="p-2 text-center text-sm font-medium bg-gray-50 border-r">
                                 {time}
                             </div>
 
-                            {/* Day cells */}
+                            {}
                             {weekDates.map((date) => {
                                 const dateStr = formatDate(date);
                                 const isTodayCol = isToday(date);
@@ -335,7 +322,7 @@ export const WeeklyCalendar = ({
                 </div>
             </div>
 
-            {/* Hover tooltip */}
+            {}
             {hoveredAppointment && (
                 <div className="absolute bg-white shadow-lg rounded-lg p-4 z-30 border min-w-64" style={{ top: '100px', right: '20px' }}>
                     <h4 className="font-bold mb-2">Szczegóły wizyty</h4>
@@ -348,7 +335,7 @@ export const WeeklyCalendar = ({
                 </div>
             )}
 
-            {/* Legend */}
+            {}
             <div className="p-4 bg-gray-50 border-t flex flex-wrap gap-4 text-sm">
                 <div className="flex items-center gap-1">
                     <div className="w-4 h-4 bg-green-200 border border-green-400"></div>

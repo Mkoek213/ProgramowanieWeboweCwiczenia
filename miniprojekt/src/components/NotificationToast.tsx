@@ -8,7 +8,6 @@ export const NotificationToast = () => {
     useEffect(() => {
         if (hasNewUpdates && scheduleUpdates.length > 0) {
             setIsOpen(true);
-            // Auto-close after 5 seconds
             const timer = setTimeout(() => {
                 setIsOpen(false);
                 clearUpdates();
@@ -27,10 +26,10 @@ export const NotificationToast = () => {
                 <div className="flex justify-between items-start">
                     <div className="flex items-start gap-3">
                         <div className="text-2xl">
-                            {latestUpdate.type === 'absence' && '🚫'}
-                            {latestUpdate.type === 'cancelled' && '❌'}
-                            {latestUpdate.type === 'availability_change' && '📅'}
-                            {latestUpdate.type === 'new_slot' && '✨'}
+                            {latestUpdate.type === 'absence' && ''}
+                            {latestUpdate.type === 'cancelled' && ''}
+                            {latestUpdate.type === 'availability_change' && ''}
+                            {latestUpdate.type === 'new_slot' && ''}
                         </div>
                         <div>
                             <p className="font-medium text-gray-900">Aktualizacja harmonogramu</p>
@@ -47,7 +46,7 @@ export const NotificationToast = () => {
                         }}
                         className="text-gray-400 hover:text-gray-600"
                     >
-                        ✕
+
                     </button>
                 </div>
 

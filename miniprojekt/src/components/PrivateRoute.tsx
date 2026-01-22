@@ -8,14 +8,7 @@ interface PrivateRouteProps {
     requireAuth?: boolean;
 }
 
-/**
- * PrivateRoute component for role-based route protection
- * 
- * Usage:
- * - <PrivateRoute requireAuth> - Requires any logged in user
- * - <PrivateRoute allowedRoles={['admin']}> - Only admin can access
- * - <PrivateRoute allowedRoles={['doctor', 'admin']}> - Doctor or admin
- */
+
 export const PrivateRoute = ({
     children,
     allowedRoles,
@@ -23,21 +16,17 @@ export const PrivateRoute = ({
 }: PrivateRouteProps) => {
     const { user, isAuthenticated } = useAuth();
 
-    // If authentication is required but user is not logged in
     if (requireAuth && !isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
 
-    // If specific roles are required, check if user has one of them
     if (allowedRoles && allowedRoles.length > 0) {
         const userRole = user?.role || 'guest';
         if (!allowedRoles.includes(userRole)) {
-            // User doesn't have required role - redirect to home
             return <Navigate to="/" replace />;
         }
     }
 
-    // Check if user is banned
     if (user?.isBanned) {
         return (
             <div className="p-8 text-center">
@@ -51,10 +40,7 @@ export const PrivateRoute = ({
     return <>{children}</>;
 };
 
-/**
- * GuestOnlyRoute - Only for guests (not logged in users)
- * Redirects to home if already logged in
- */
+
 export const GuestOnlyRoute = ({ children }: { children: ReactNode }) => {
     const { isAuthenticated } = useAuth();
 

@@ -70,7 +70,7 @@ interface EmptyStateProps {
     action?: ReactNode;
 }
 
-export const EmptyState = ({ icon = '📭', title, description, action }: EmptyStateProps) => (
+export const EmptyState = ({ icon = '', title, description, action }: EmptyStateProps) => (
     <div className="text-center py-12 px-4">
         <div className="text-5xl mb-4">{icon}</div>
         <h3 className="text-xl font-semibold text-gray-700 mb-2">{title}</h3>
@@ -95,9 +95,9 @@ export const Alert = ({ type, title, message, onClose }: AlertProps) => {
     };
 
     const icons = {
-        success: '✓',
-        error: '✕',
-        warning: '⚠',
+        success: '',
+        error: '',
+        warning: '',
         info: 'ℹ'
     };
 
@@ -110,7 +110,7 @@ export const Alert = ({ type, title, message, onClose }: AlertProps) => {
             </div>
             {onClose && (
                 <button onClick={onClose} className="opacity-60 hover:opacity-100">
-                    ✕
+
                 </button>
             )}
         </div>

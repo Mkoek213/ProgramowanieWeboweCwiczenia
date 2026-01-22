@@ -21,7 +21,6 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const { backend } = useBackend();
     const [cart, setCart] = useState<Appointment[]>([]);
 
-    // Load cart from localStorage on mount and user change
     useEffect(() => {
         if (isAuthenticated && user) {
             const storageKey = `${CART_STORAGE_KEY}_${user.id}`;
@@ -35,12 +34,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 console.error('Error loading cart from storage:', e);
             }
         } else {
-            // Clear cart when logged out
             setCart([]);
         }
     }, [isAuthenticated, user?.id]);
 
-    // Save cart to localStorage when it changes
     useEffect(() => {
         if (isAuthenticated && user && cart.length >= 0) {
             const storageKey = `${CART_STORAGE_KEY}_${user.id}`;
@@ -55,13 +52,11 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const addToCart = (appointment: Appointment) => {
         if (!user) return;
 
-        // Ensure patient ID is set
         const apptWithPatient: Appointment = {
             ...appointment,
             patientId: String(user.id)
         };
 
-        // Check for duplicates
         const isDuplicate = cart.some(
             a => a.date === apptWithPatient.date && a.doctorId === apptWithPatient.doctorId
         );
@@ -93,11 +88,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
 
         for (const appt of cart) {
-            // Update status to booked when confirming
             const confirmedAppt: Appointment = {
                 ...appt,
                 status: 'booked',
-                patientId: String(user.id), // Ensure patientId is set as string
+                patientId: String(user.id), 
             };
 
             try {
@@ -106,7 +100,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 console.log('Appointment saved successfully');
             } catch (error) {
                 console.error('Error saving appointment:', error);
-                // Continue with other appointments
+
             }
         }
         clearCart();

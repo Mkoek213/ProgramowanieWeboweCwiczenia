@@ -9,7 +9,6 @@ export class JsonServerBackend implements IDataBackend {
         console.log("JSON Server Backend initialized");
     }
 
-    // Helper method to make authenticated requests
     private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
         const response = await authService.authFetch(`${this.baseUrl}${endpoint}`, options);
 
@@ -94,16 +93,13 @@ export class JsonServerBackend implements IDataBackend {
 
     // ==================== REVIEWS ====================
     async addReview(doctorId: string, review: Review): Promise<void> {
-        // Get the current doctor
         const doctor = await this.getDoctorById(doctorId);
         if (!doctor) {
             throw new Error('Doctor not found');
         }
 
-        // Add the review to the doctor's reviews array
         doctor.reviews.push(review);
 
-        // Update the doctor
         await this.updateDoctor(doctor);
     }
 

@@ -60,9 +60,9 @@ export const DoctorList = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-4">👨‍⚕️ Lista Lekarzy</h2>
+            <h2 className="text-2xl font-bold mb-4">Lista Lekarzy</h2>
 
-            {/* Guest info banner */}
+            {}
             {!isAuthenticated && (
                 <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded mb-4">
                     <p>
@@ -73,7 +73,7 @@ export const DoctorList = () => {
                 </div>
             )}
 
-            {/* Pasek narzedzi: Szukanie, Filtrowanie, Sortowanie */}
+            {}
             <div className="bg-white p-4 rounded shadow mb-6 flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                     <label className="block text-sm font-bold mb-1">Szukaj (Imię)</label>
@@ -126,11 +126,11 @@ export const DoctorList = () => {
                             <h3 className="text-xl font-bold">{doc.name}</h3>
                             <p className="text-blue-600 mb-2">{doc.specialization}</p>
 
-                            {/* Rating */}
+                            {}
                             <div className="flex items-center gap-1 mb-2">
                                 <span className="text-yellow-500">
-                                    {'★'.repeat(Math.round(avgRating))}
-                                    {'☆'.repeat(5 - Math.round(avgRating))}
+                                    {''.repeat(Math.round(avgRating))}
+                                    {''.repeat(5 - Math.round(avgRating))}
                                 </span>
                                 <span className="text-gray-500 text-sm">
                                     ({doc.reviews?.length || 0} opinii)

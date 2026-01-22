@@ -19,12 +19,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
     const [persistenceMode, setPersistenceModeState] = useState<PersistenceMode>('LOCAL');
 
-    // Helper to persist mode
     const persistMode = (mode: PersistenceMode) => {
         localStorage.setItem('authPersistenceMode', mode);
     };
 
-    // On mount, load persistence mode and user from correct storage
     useEffect(() => {
         try {
             const savedMode = localStorage.getItem('authPersistenceMode') as PersistenceMode | null;
@@ -50,12 +48,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     }, []);
 
-    // Custom setter to persist mode and move user data if needed
     const setPersistenceMode = (mode: PersistenceMode) => {
         if (mode === persistenceMode) return;
         persistMode(mode);
         setPersistenceModeState(mode);
-        // Move user data to new storage
         if (user) {
             if (mode === 'LOCAL') {
                 localStorage.setItem('currentUser', JSON.stringify(user));
@@ -80,14 +76,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         } else if (persistenceMode === 'SESSION') {
             sessionStorage.setItem('currentUser', JSON.stringify(newUser));
         }
-        // NONE: do nothing
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('currentUser');
         sessionStorage.removeItem('currentUser');
-        // Clear JWT token
         authService.clearToken();
     };
 

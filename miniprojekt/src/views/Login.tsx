@@ -31,7 +31,6 @@ export const Login = () => {
             // Use JWT auth service
             const result = await authService.login({ email, password });
 
-            // Create user object for AuthContext
             const user = {
                 id: String(result.user.id),
                 email: result.user.email,
@@ -63,14 +62,14 @@ export const Login = () => {
         <div className="min-h-[60vh] flex items-center justify-center animate-fade-in">
             <div className="card max-w-md w-full">
                 <div className="text-center mb-6">
-                    <span className="text-5xl">🔐</span>
+                    <span className="text-5xl"></span>
                     <h2 className="text-2xl font-bold mt-4">Logowanie</h2>
                     <p className="text-gray-500 mt-1">Zaloguj się do swojego konta</p>
                 </div>
 
                 {error && (
                     <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 animate-slide-down">
-                        ⚠️ {error}
+                        {error}
                     </div>
                 )}
 
@@ -117,7 +116,7 @@ export const Login = () => {
                             </>
                         ) : (
                             <>
-                                <span>🔑</span>
+                                <span></span>
                                 <span>Zaloguj się</span>
                             </>
                         )}
@@ -132,7 +131,7 @@ export const Login = () => {
                 </div>
 
                 <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                    <p className="text-sm font-medium text-gray-700 mb-2">🔧 Konta testowe:</p>
+                    <p className="text-sm font-medium text-gray-700 mb-2">Konta testowe:</p>
                     <div className="text-xs text-gray-500 space-y-1 font-mono">
                         <p><strong>Admin:</strong> admin@admin.com / test123</p>
                         <p><strong>Lekarz:</strong> jan@lekarz.pl / test123</p>

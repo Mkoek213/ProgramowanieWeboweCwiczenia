@@ -42,7 +42,7 @@ export const Register = () => {
         setIsLoading(true);
 
         try {
-            // Use JWT auth service for registration
+
             const result = await authService.register({
                 email,
                 password,
@@ -50,7 +50,7 @@ export const Register = () => {
                 role: 'patient'
             });
 
-            // Create user object for AuthContext
+
             const user = {
                 id: String(result.user.id),
                 email: result.user.email,
@@ -76,14 +76,14 @@ export const Register = () => {
         <div className="min-h-[60vh] flex items-center justify-center animate-fade-in">
             <div className="card max-w-md w-full">
                 <div className="text-center mb-6">
-                    <span className="text-5xl">📝</span>
+                    <span className="text-5xl"></span>
                     <h2 className="text-2xl font-bold mt-4">Rejestracja</h2>
                     <p className="text-gray-500 mt-1">Utwórz nowe konto pacjenta</p>
                 </div>
 
                 {error && (
                     <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 animate-slide-down">
-                        ⚠️ {error}
+                        {error}
                     </div>
                 )}
 
@@ -156,7 +156,7 @@ export const Register = () => {
                             </>
                         ) : (
                             <>
-                                <span>✓</span>
+                                <span></span>
                                 <span>Zarejestruj się</span>
                             </>
                         )}

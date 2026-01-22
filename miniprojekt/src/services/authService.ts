@@ -1,4 +1,4 @@
-// JWT Token management for json-server-auth
+
 
 const TOKEN_KEY = 'medapp_access_token';
 const REFRESH_TOKEN_KEY = 'medapp_refresh_token';

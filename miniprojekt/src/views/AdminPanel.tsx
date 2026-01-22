@@ -18,7 +18,6 @@ export const AdminPanel = () => {
     const [newDrEmail, setNewDrEmail] = useState('');
     const [newDrPassword, setNewDrPassword] = useState('');
 
-    // Datalist source for specs
     const [availableSpecs, setAvailableSpecs] = useState<string[]>([]);
 
     useEffect(() => {
@@ -54,7 +53,7 @@ export const AdminPanel = () => {
 
         if (backendType === 'json') {
             await authService.authFetch(`http://localhost:3000/doctors/${id}`, { method: 'DELETE' });
-            // Also try to delete associated user
+
             const docUser = users.find(u => u.id === id || u.email.includes('@lekarz'));
             if (docUser) {
                 try {
@@ -100,7 +99,7 @@ export const AdminPanel = () => {
         const newUser: User = {
             id: newDoc.id,
             email: newDrEmail,
-            password: newDrPassword, // Server will hash with bcrypt
+            password: newDrPassword, 
             role: 'doctor',
             name: newDrName
         };
@@ -132,36 +131,36 @@ export const AdminPanel = () => {
 
     return (
         <div className="p-4">
-            <h2 className="text-2xl font-bold mb-6">⚙️ Panel Administratora</h2>
+            <h2 className="text-2xl font-bold mb-6">Panel Administratora</h2>
 
-            {/* Tabs */}
+            {}
             <div className="flex gap-2 mb-6">
                 <button
                     onClick={() => setActiveTab('doctors')}
                     className={`px-4 py-2 rounded ${activeTab === 'doctors' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
                 >
-                    👨‍⚕️ Lekarze
+                    Lekarze
                 </button>
                 <button
                     onClick={() => setActiveTab('users')}
                     className={`px-4 py-2 rounded ${activeTab === 'users' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
                 >
-                    👥 Użytkownicy
+                    Użytkownicy
                 </button>
                 <button
                     onClick={() => setActiveTab('settings')}
                     className={`px-4 py-2 rounded ${activeTab === 'settings' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
                 >
-                    ⚙️ Ustawienia
+                    Ustawienia
                 </button>
             </div>
 
-            {/* Doctors Tab */}
+            {}
             {activeTab === 'doctors' && (
                 <div className="space-y-6">
-                    {/* Add Doctor Form */}
+                    {}
                     <div className="bg-white p-6 rounded-lg shadow">
-                        <h3 className="font-bold text-lg mb-4">➕ Dodaj Lekarza</h3>
+                        <h3 className="font-bold text-lg mb-4">Dodaj Lekarza</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <input
                                 className="border p-2 rounded"
@@ -209,9 +208,9 @@ export const AdminPanel = () => {
                         </button>
                     </div>
 
-                    {/* Doctors List with Reviews */}
+                    {}
                     <div className="bg-white p-6 rounded-lg shadow">
-                        <h3 className="font-bold text-lg mb-4">📋 Lista Lekarzy</h3>
+                        <h3 className="font-bold text-lg mb-4">Lista Lekarzy</h3>
                         <div className="space-y-4">
                             {doctors.map(d => (
                                 <div key={d.id} className="border rounded-lg p-4">
@@ -229,7 +228,7 @@ export const AdminPanel = () => {
                                         </button>
                                     </div>
 
-                                    {/* Reviews (admin can delete) */}
+                                    {}
                                     {d.reviews.length > 0 && (
                                         <div className="mt-3 pl-4 border-l-2 border-gray-200">
                                             <p className="text-sm text-gray-500 mb-2">Opinie ({d.reviews.length}):</p>
@@ -237,7 +236,7 @@ export const AdminPanel = () => {
                                                 <div key={r.id} className="flex justify-between items-start mb-2 text-sm bg-gray-50 p-2 rounded">
                                                     <div>
                                                         <span className="font-medium">{r.author}</span>
-                                                        <span className="text-yellow-500 ml-2">{'★'.repeat(r.rating)}</span>
+                                                        <span className="text-yellow-500 ml-2">{''.repeat(r.rating)}</span>
                                                         <p className="text-gray-600">{r.text}</p>
                                                     </div>
                                                     <button
@@ -257,10 +256,10 @@ export const AdminPanel = () => {
                 </div>
             )}
 
-            {/* Users Tab */}
+            {}
             {activeTab === 'users' && (
                 <div className="bg-white p-6 rounded-lg shadow">
-                    <h3 className="font-bold text-lg mb-4">👥 Zarządzanie Użytkownikami</h3>
+                    <h3 className="font-bold text-lg mb-4">Zarządzanie Użytkownikami</h3>
                     <table className="w-full">
                         <thead>
                             <tr className="border-b">
@@ -286,9 +285,9 @@ export const AdminPanel = () => {
                                     </td>
                                     <td className="p-2">
                                         {u.isBanned ? (
-                                            <span className="text-red-600 text-sm">🚫 Zbanowany</span>
+                                            <span className="text-red-600 text-sm">Zbanowany</span>
                                         ) : (
-                                            <span className="text-green-600 text-sm">✓ Aktywny</span>
+                                            <span className="text-green-600 text-sm">Aktywny</span>
                                         )}
                                     </td>
                                     <td className="p-2 text-right">
@@ -311,11 +310,11 @@ export const AdminPanel = () => {
                 </div>
             )}
 
-            {/* Settings Tab */}
+            {}
             {activeTab === 'settings' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white p-6 rounded-lg shadow">
-                        <h3 className="font-bold text-lg mb-4">🗄️ Źródło danych</h3>
+                        <h3 className="font-bold text-lg mb-4">Źródło danych</h3>
                         <p className="text-gray-600 mb-2">Aktualnie: <strong>JSON Server</strong></p>
                         <p className="text-sm text-gray-400">
                             Dane są przechowywane lokalnie w pliku db.json
@@ -323,7 +322,7 @@ export const AdminPanel = () => {
                     </div>
 
                     <div className="bg-white p-6 rounded-lg shadow">
-                        <h3 className="font-bold text-lg mb-4">💾 Persystencja logowania</h3>
+                        <h3 className="font-bold text-lg mb-4">Persystencja logowania</h3>
                         <p className="text-gray-600 mb-2">Aktualnie: <strong>{persistenceMode}</strong></p>
                         <div className="flex gap-2">
                             {(['LOCAL', 'SESSION', 'NONE'] as PersistenceMode[]).map(m => (
