@@ -17,21 +17,30 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [persistenceMode, setPersistenceMode] = useState<PersistenceMode>('LOCAL');
+    const [persistenceMode, setPersistenceModeState] = useState<PersistenceMode>('LOCAL');
 
-    // Init from storage
+    // Helper to persist mode
+    const persistMode = (mode: PersistenceMode) => {
+        localStorage.setItem('authPersistenceMode', mode);
+    };
+
+    // On mount, load persistence mode and user from correct storage
     useEffect(() => {
         try {
-            const stored = localStorage.getItem('currentUser');
+            const savedMode = localStorage.getItem('authPersistenceMode') as PersistenceMode | null;
+            let mode: PersistenceMode = savedMode || 'LOCAL';
+            setPersistenceModeState(mode);
+
+            let stored: string | null = null;
+            if (mode === 'LOCAL') {
+                stored = localStorage.getItem('currentUser');
+            } else if (mode === 'SESSION') {
+                stored = sessionStorage.getItem('currentUser');
+            }
             if (stored) {
                 setUser(JSON.parse(stored));
-                setPersistenceMode('LOCAL');
-                return;
-            }
-            const storedSession = sessionStorage.getItem('currentUser');
-            if (storedSession) {
-                setUser(JSON.parse(storedSession));
-                setPersistenceMode('SESSION');
+            } else {
+                setUser(null);
             }
         } catch (e) {
             console.error("Auth init error", e);
@@ -40,6 +49,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             authService.clearToken();
         }
     }, []);
+
+    // Custom setter to persist mode and move user data if needed
+    const setPersistenceMode = (mode: PersistenceMode) => {
+        if (mode === persistenceMode) return;
+        persistMode(mode);
+        setPersistenceModeState(mode);
+        // Move user data to new storage
+        if (user) {
+            if (mode === 'LOCAL') {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                sessionStorage.removeItem('currentUser');
+            } else if (mode === 'SESSION') {
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.removeItem('currentUser');
+            } else {
+                localStorage.removeItem('currentUser');
+                sessionStorage.removeItem('currentUser');
+            }
+        } else {
+            localStorage.removeItem('currentUser');
+            sessionStorage.removeItem('currentUser');
+        }
+    };
 
     const login = (newUser: User) => {
         setUser(newUser);

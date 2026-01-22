@@ -17,6 +17,22 @@
       "isBanned": false
     },
     {
+      "id": "1",
+      "email": "jan@lekarz.pl",
+      "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+      "role": "doctor",
+      "name": "Dr Jan Kowalski",
+      "isBanned": false
+    },
+    {
+      "id": "2",
+      "email": "anna@lekarz.pl",
+      "password": "$2b$10$cFFeZQy7ht7phdZ.p.Wscusx0dYDQh8yEhW/7u2TEdRoyy5KVsCTe",
+      "role": "doctor",
+      "name": "Dr Anna Nowak",
+      "isBanned": false
+    },
+    {
       "id": "1768947641028",
       "email": "aa@lekarz.pl",
       "password": "c20",
@@ -35,6 +51,21 @@
       "email": "p@t",
       "password": "$2b$10$i7uTROf/I3/TIKfDlGbkGuWJFXIO21OCvvqH4ZMqo8se6h3hyev7W",
       "name": "p",
+      "role": "patient",
+      "isBanned": false
+    },
+    {
+      "id": "1769073012798",
+      "email": "bb@test",
+      "password": "$2b$10$uU19OHVChfaNxda0sTCRtej569k7SIcZm4VcXt4rLAZb6b7LjfZSi",
+      "role": "doctor",
+      "name": "bb"
+    },
+    {
+      "id": 1769073062275,
+      "email": "bbb@test",
+      "password": "$2b$10$WIhxXeLJCj0h.7NssyR8quuUSmVVUis68buciAIGwXWY8Zg7W9hb6",
+      "name": "bb",
       "role": "patient",
       "isBanned": false
     }
@@ -65,6 +96,16 @@
       "name": "aa",
       "specialization": "aa",
       "price": 100,
+      "description": "Nowy lekarz w systemie",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
+      "reviews": [],
+      "schedule": []
+    },
+    {
+      "id": "1769073012798",
+      "name": "bb",
+      "specialization": "bb",
+      "price": 10000,
       "description": "Nowy lekarz w systemie",
       "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300",
       "reviews": [],
@@ -172,6 +213,28 @@
       "notes": "11",
       "cancelledAt": "2026-01-20T22:38:20.931Z",
       "cancelReason": "Odwołane przez lekarza"
+    },
+    {
+      "id": "1769072960045",
+      "doctorId": "1768947912866",
+      "patientId": "3",
+      "date": "2026-01-24 09:00",
+      "duration": 4,
+      "status": "booked",
+      "consultationType": "first_visit",
+      "patientName": "bb",
+      "patientGender": "male",
+      "patientAge": 3,
+      "notes": "ss",
+      "documents": [
+        {
+          "id": "17690729494990",
+          "name": "krzyzowka.pdf",
+          "type": "application/pdf",
+          "size": 216933,
+          "uploadedAt": "2026-01-22T09:09:09.499Z"
+        }
+      ]
     }
   ],
   "availabilities": [
@@ -280,6 +343,28 @@
           "to": "18:00"
         }
       ]
+    },
+    {
+      "id": "1769072887067",
+      "doctorId": "1",
+      "type": "cyclic",
+      "startDate": "2026-01-22",
+      "endDate": "2026-01-31",
+      "dayMask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true
+      ],
+      "timeRanges": [
+        {
+          "from": "08:00",
+          "to": "12:00"
+        }
+      ]
     }
   ],
   "absences": [
@@ -310,6 +395,13 @@
       "startDate": "2026-01-20",
       "endDate": "2026-01-23",
       "reason": "aa"
+    },
+    {
+      "id": "1769072913891",
+      "doctorId": "1",
+      "startDate": "2026-01-22",
+      "endDate": "2026-02-22",
+      "reason": "bb"
     }
   ]
 }
